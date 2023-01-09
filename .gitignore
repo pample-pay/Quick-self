@@ -1,0 +1,8 @@
+.DS_Store
+db.sqlite3
+
+# secret key
+secrets.json
+
+# wJJin's virtual env
+quickself/
