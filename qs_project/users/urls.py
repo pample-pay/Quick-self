@@ -3,4 +3,7 @@ from . import views
 
 app_name = 'users'
 
-urlpatterns = []
+urlpatterns = [
+    path('register/', views.UserRegisterView.as_view(), name='user_register'),
+    path('api/example', views.AuthView.as_view(), name='example'), 
+]
