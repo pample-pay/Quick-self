@@ -8,146 +8,112 @@
 </head>
 <body>
 
-<form action="" id="signup" method="POST" novalidate>
+<form method="POST" novalidate>
     {% csrf_token %}
     <div>
         <!--아이디-->
         <div class="">
-            <label name="label_user_id" for="{{ form.user_id.id_for_label }}">
-                {{ form.user_id.label }}
-            </label>
+            <p>
+                아이디
 
-            {{ form.user_id }}
+                {{ form.user_id }}
 
-            <script type="text/javascript">
-                if (document.getElementsByName('user_id')[0].value != '') {
-                    document.getElementsByName('label_user_id')[0].setAttribute('class',
-                        'active');
-                }
-            </script>
+                {% for error in form.user_id.errors %}
+                    {{ error }}
+                {% endfor %}
 
-            {% if form.user_id.errors %}
-            <script type="text/javascript">
-                document.getElementsByName('user_id')[0].setAttribute('class',
-                    'form-control is-invalid')
-            </script>
+                {{ errors.user_id }}
+            </p>
 
-            {% for error in form.user_id.errors %}
-            <div class="invalid-feedback">
-                {{ error }}
-            </div>
-
-            {% endfor %}
-            {% endif %}
-            <small class="form-text text-muted">
-                로그인 시 사용할 아이디를 입력해주세요.
-            </small>
         </div>
         
         <!--비밀번호-->
         <div class="">
+            <!--비밀번호입력-->
             <div class="">
-                <div class="">
-                    <label name="label_password2" for="{{ form.password2.id_for_label }}">
-                        비밀번호
-                    </label>
+                <p>
+                    비밀번호
 
                     {{ form.password2 }}
 
-                    <script type="text/javascript">
-                        if (document.getElementsByName('password2')[0].value != '') {
-                            document.getElementsByName('label_password2')[0].setAttribute('class', 'active');
-                        }
-                    </script>
-
-                    {% if form.password2.errors %}
-                    <script type="text/javascript">
-                        document.getElementsByName('password2')[0].setAttribute('class',
-                            'form-control is-invalid')
-                    </script>
-
                     {% for error in form.password2.errors %}
-                    <div style="white-space: nowrap;" class="invalid-feedback">
                         {{ error }}
-                    </div>
-
                     {% endfor %}
-                    {% endif %}
-                </div>
+    
+                    {{ errors.password2 }}
+                </p>
             </div>
+            
             <!--비밀번호확인-->
             <div class="">
-                <div class="">
-                    <label name="label_password1" for="{{ form.password1.id_for_label }}">
-                        비밀번호 확인
-                    </label>
-
+                <p>
+                    비밀번호 확인
                     {{ form.password1 }}
 
-                    <script type="text/javascript">
-                        if (document.getElementsByName('password1')[0].value != '') {
-                            document.getElementsByName('label_password1')[0].setAttribute('class','active');
-                        }
-                    </script>
-
-                    {% if form.password1.errors %}
-                    <script type="text/javascript">
-                        document.getElementsByName('password1')[0].setAttribute('class',
-                            'form-control is-invalid')
-                    </script>
-
                     {% for error in form.password1.errors %}
-                    <div class="invalid-feedback">
                         {{ error }}
-                    </div>
-
                     {% endfor %}
-                    {% endif %}
-                </div>
+    
+                    {{ errors.password1 }}
+                </p>
+
+                <small class="">
+                    최소 8개의 숫자와 문자 또는 특수기호를 입력해주세요. 일상적인 비밀번호는 사용할 수 없습니다.
+                </small>
             </div>
-            <small class="">
-                최소 8개의 숫자와 문자 또는 특수기호를 입력해주세요. 일상적인 비밀번호는 사용할 수 없습니다.
-            </small>
         </div>
         
         <!--휴대폰번호-->
         <div class="">
-            <label name="label_hp" for="{{ form.hp.id_for_label }}">
-                {{ form.hp.label }}
-            </label>
+            <p>
+                휴대폰 번호
+                {{ form.hp }}
 
-            {{ form.hp }}
+                {% for error in form.hp.errors %}
+                    {{ error }}
+                {% endfor %}
+                {{ errors.hp }}
+            </p>
 
-            <script type="text/javascript">
-                if (document.getElementsByName('hp')[0].value != '') {
-                    document.getElementsByName('label_hp')[0].setAttribute('class', 'active');
-                }
-            </script>
+            <button class="" type="submit" formaction="../api/auth-message" formtarget="blankifr" onclick="btnActive()">
+                인증번호 전송
+            </button>
 
-            {% if form.hp.errors %}
-            <script type="text/javascript">
-                document.getElementsByName('hp')[0].setAttribute('class',
-                    'form-control is-invalid')
-            </script>
-
-            {% for error in form.hp.errors %}
-            <div class="invalid-feedback">
-                {{ error }}
-            </div>
-
-            {% endfor %}
-            {% endif %}
             <small class="form-text text-muted">
-                하이픈(-)을 포함한 숫자로 입력해주세요.
+                하이픈(-)을 제외한 숫자로만 입력해주세요.
             </small>
         </div>
+        <div class="">
+            <p>
+                인증 번호
+                <input
+                    type="text"
+                    class="form-control"
+                    id="id_auth"
+                    name="auth"
+                    maxlength='6'
+                    disabled
+                />
+
+                {{ errors.auth }}
+            </p>
+        </div>
+
     </div>
 
-    <button type="submit" class="">
+    <button class="" type="submit" formaction="">
         회원가입
     </button>
 
 </form>
     
 </body>
+<iframe name='blankifr' style='display:none;'></iframe>
+<script>
+
+    function btnActive(){
+        const target = document.getElementById('id_auth');
+        target.disabled = false;
+    }
+</script>
 </html>

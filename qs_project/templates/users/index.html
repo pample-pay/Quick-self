@@ -7,6 +7,12 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <h2><a href="/register">회원가입</a></h2>
+
+    {% load socialaccount %}
+
+    <a href="{% provider_login_url 'naver' method='oauth2' %}">
+    네이버 로그인
+    </a>
 </body>
 </html>
