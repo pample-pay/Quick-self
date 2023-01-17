@@ -9,8 +9,10 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-BASE_URL = '/'
 
+BASE_URL = '/'
+KAKAO_CALLBACK_URI = BASE_URL + 'kakao/callback/'
+NAVER_CALLBACK_URI = BASE_URL + 'naver/callback/'
 
 
 
@@ -56,5 +58,3 @@ class AuthView(APIView):
         else:
             AuthSMS.objects.update_or_create(hp=p_num)
             return Response({'message': 'OK'})
-
-
