@@ -5,5 +5,5 @@ app_name = 'users'
 
 urlpatterns = [
     path('register/', views.UserRegisterView.as_view(), name='user_register'),
-    path('api/example', views.AuthView.as_view(), name='example'), 
+    path('api/auth-message', views.AuthView.as_view(), name='auth_message'), 
 ]

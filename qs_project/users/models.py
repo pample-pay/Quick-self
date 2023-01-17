@@ -4,6 +4,7 @@ import json
 import time
 import base64
 import random
+import datetime
 import hashlib
 import requests
 
@@ -13,6 +14,7 @@ from model_utils.models import TimeStampedModel
 from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.utils import timezone
 
 class UserManager(BaseUserManager):
     def create_user(self, user_id, password, hp, auth, **extra_fields):
@@ -114,3 +116,4 @@ class AuthSMS(TimeStampedModel):
         }
 
         requests.post(apiUrl, headers=headers, data=body2)
+    

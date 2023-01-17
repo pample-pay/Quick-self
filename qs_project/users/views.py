@@ -30,8 +30,7 @@ class AuthView(APIView):
 
     def post(self, request):
         try:
-            # p_num = request.data['hp']
-            p_num = '01089833328'
+            p_num = request.data['hp']
         except KeyError:
             return Response({'message': 'Bad Request'}, status=status.HTTP_400_BAD_REQUEST)
         else:

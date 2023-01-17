@@ -3,11 +3,6 @@ from .models import User
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 
-def hp_validator(value):
-    if len(str(value)) != 10:
-        raise forms.ValidationError('핸드폰 번호 입력 형식을 맞춰주세요.')
-
-
 class UserRegisterForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
         super(UserRegisterForm, self).__init__(*args, **kwargs)
@@ -24,7 +19,7 @@ class UserRegisterForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ['user_id', 'password1', 'password2', 'hp',]
+        fields = ['user_id', 'password1', 'password2', 'hp', 'auth',]
 
     def save(self, commit=True):
         user = super(UserRegisterForm, self).save(commit=False)
