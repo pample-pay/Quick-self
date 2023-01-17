@@ -41,11 +41,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     
     objects = UserManager()
 
-    user_id = models.CharField(max_length=17, verbose_name="아이디", unique=True)
+    user_id = models.CharField(max_length=15, verbose_name="아이디", unique=True)
     password = models.CharField(max_length=256, verbose_name="비밀번호")
     hp = models.CharField(max_length=11, verbose_name="휴대폰번호", null=True, unique=True)
     level = models.CharField(choices=LEVEL_CHOICES, max_length=18, verbose_name="등급", default=2)
-    auth = models.CharField(max_length=10, verbose_name="인증번호", null=True)
+    auth = models.CharField(max_length=6, verbose_name="인증번호", null=True)
     date_joined = models.DateTimeField(auto_now_add=True, verbose_name='가입일', null=True, blank=True)
 
     is_active = models.BooleanField(default=True)
@@ -105,7 +105,7 @@ class AuthSMS(TimeStampedModel):
             "from" : "01089833328",
             "subject" : "subject",
             "content" : "[퀵셀프] 인증 번호 [{}]를 입력해주세요.".format(self.auth),
-            "messages" : [{"to" : "01089833328"}]
+            "messages" : [{"to" : self.hp}]
         }
         body2 = json.dumps(body)
         headers = {
@@ -116,4 +116,17 @@ class AuthSMS(TimeStampedModel):
         }
 
         requests.post(apiUrl, headers=headers, data=body2)
-    
+
+    @classmethod
+    def check_timer(cls, p_num, c_num):
+
+        time_limit = timezone.now() - datetime.timedelta(minutes=5)
+        result = cls.objects.filter(
+            hp=p_num,
+            auth=c_num,
+            modified__gte=time_limit
+        )
+
+        if result:
+            return True
+        return False

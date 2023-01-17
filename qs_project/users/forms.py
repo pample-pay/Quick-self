@@ -16,6 +16,16 @@ class UserRegisterForm(UserCreationForm):
         self.fields['password1'].widget.attrs.update({
             'class': 'form-control',
         })
+        
+        self.fields['hp'].label = '휴대폰번호'
+        self.fields['hp'].widget.attrs.update({
+            'class': 'form-control',
+        })
+
+        self.fields['auth'].label = '인증번호'
+        self.fields['auth'].widget.attrs.update({
+            'class': 'form-control',
+        })
 
     class Meta:
         model = User

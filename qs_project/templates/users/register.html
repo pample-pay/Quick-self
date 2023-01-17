@@ -15,11 +15,14 @@
         <div class="">
             <p>
                 아이디
+
                 {{ form.user_id }}
 
                 {% for error in form.user_id.errors %}
                     {{ error }}
                 {% endfor %}
+
+                {{ errors.user_id }}
             </p>
 
         </div>
@@ -30,11 +33,14 @@
             <div class="">
                 <p>
                     비밀번호
+
                     {{ form.password2 }}
 
                     {% for error in form.password2.errors %}
                         {{ error }}
                     {% endfor %}
+    
+                    {{ errors.password2 }}
                 </p>
             </div>
             
@@ -47,6 +53,8 @@
                     {% for error in form.password1.errors %}
                         {{ error }}
                     {% endfor %}
+    
+                    {{ errors.password1 }}
                 </p>
 
                 <small class="">
@@ -64,9 +72,10 @@
                 {% for error in form.hp.errors %}
                     {{ error }}
                 {% endfor %}
+                {{ errors.hp }}
             </p>
 
-            <button class="" type="submit" formaction="../api/auth-message  ">
+            <button class="" type="submit" formaction="../api/auth-message" formtarget="blankifr" onclick="btnActive()">
                 인증번호 전송
             </button>
 
@@ -77,11 +86,16 @@
         <div class="">
             <p>
                 인증 번호
-                {{ form.auth }}
+                <input
+                    type="text"
+                    class="form-control"
+                    id="id_auth"
+                    name="auth"
+                    maxlength='6'
+                    disabled
+                />
 
-                {% for error in form.auth.errors %}
-                    {{ error }}
-                {% endfor %}
+                {{ errors.auth }}
             </p>
         </div>
 
@@ -94,4 +108,12 @@
 </form>
     
 </body>
+<iframe name='blankifr' style='display:none;'></iframe>
+<script>
+
+    function btnActive(){
+        const target = document.getElementById('id_auth');
+        target.disabled = false;
+    }
+</script>
 </html>

@@ -1,28 +1,48 @@
 from .forms import UserRegisterForm
 from .models import User, AuthSMS
+from .modules import check_auth, register_errors
 
-from django.contrib import messages
-from django.core.exceptions import PermissionDenied
 from django.shortcuts import render, redirect
 from django.views.generic import CreateView
 
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
- 
+
+BASE_URL = '/'
+
+
+
+
+def index_view(request):
+    return render(request, 'users/index.html')
+
 
 class UserRegisterView(CreateView):
     model = User
     template_name = 'users/register.html'
     form_class = UserRegisterForm
 
-    def get_success_url(self):
-        messages.success(self.request, "회원가입 성공.")
-        return redirect('/')
-
     def form_valid(self, form):
-        self.object = form.save()
-        return redirect(self.get_success_url())
+        user_hp = form.cleaned_data['hp']
+        user_auth = form.cleaned_data['auth']
+
+        if check_auth(user_hp, user_auth) == True:
+            errors = register_errors(form)
+
+            if errors == {}:
+                self.object = form.save()
+                return redirect('/')
+            else:
+                return self.render_to_response(self.get_context_data(form=form, errors=errors))
+
+        else:
+            errors = register_errors(form)
+            return self.render_to_response(self.get_context_data(form=form, errors=errors))
+    
+    def form_invalid(self, form):
+        errors = register_errors(form)
+        return self.render_to_response(self.get_context_data(form=form, errors=errors))
 
 
 
@@ -36,3 +56,5 @@ class AuthView(APIView):
         else:
             AuthSMS.objects.update_or_create(hp=p_num)
             return Response({'message': 'OK'})
+
+
