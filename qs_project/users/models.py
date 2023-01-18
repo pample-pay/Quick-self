@@ -16,6 +16,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.utils import timezone
 
+
+
 class UserManager(BaseUserManager):
     def create_user(self, user_id, password, hp, auth, **extra_fields):
         user = self.model(
@@ -37,7 +39,18 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
+
+
 class User(AbstractBaseUser, PermissionsMixin):
+    '''
+    회원 정보 테이블, 테이블명 USER_TB
+    user_id : 유저 아이디
+    password : 비밀번호
+    hp : 휴대폰번호
+    level : 사용자 권한 등급, 개발자 0, 관리자 1, 유저는 default 2
+    auth : 인증번호 6자리
+    date_joined : 가입일, auto_now_add 사용
+    '''
     
     objects = UserManager()
 
@@ -66,7 +79,11 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 class AuthSMS(TimeStampedModel):
-    
+    '''
+    회원가입 문자 인증을 위한 model, 테이블명 AUTH_TB
+    네이버 sens 서비스를 통해 입력한 휴대폰 번호로 인증 번호를 보냅니다.
+    인증 코드는 6자리 숫자입니다.
+    '''
     hp = models.CharField(max_length=11, verbose_name='휴대폰번호', primary_key=True)
     auth = models.IntegerField(verbose_name='인증번호')
 
@@ -74,19 +91,19 @@ class AuthSMS(TimeStampedModel):
         db_table = 'AUTH_TB'
 
     def save(self, *args, **kwargs):
-        self.auth = random.randint(100000, 1000000)
+        self.auth = random.randint(100000, 1000000) # 난수로 6자리 문자 인증 번호 생성
         super().save(*args, **kwargs)
-        self.send_sms()
+        self.send_sms() # 문자 전송용 함수
 
     def send_sms(self):
 
         BASE_DIR = getattr(settings, 'BASE_DIR', None)
-        file_path = "naver_cloud_sens.json"
+        file_path = "naver_cloud_sens.json" # 네이버 sens api key 파일
 
         with open(os.path.join(BASE_DIR,file_path), encoding='utf-8') as f:
             nc_sens_key = json.load(f)
 
-
+        ##### 네이버 sens 서비스 이용 위한 json request 형식 #####
         timestamp = str(int(time.time() * 1000))
 
         url = "https://sens.apigw.ntruss.com"
@@ -117,10 +134,13 @@ class AuthSMS(TimeStampedModel):
 
         requests.post(apiUrl, headers=headers, data=body2)
 
-    @classmethod
-    def check_timer(cls, p_num, c_num):
 
-        time_limit = timezone.now() - datetime.timedelta(minutes=5)
+    @classmethod
+    def check_timer(cls, p_num, c_num)->bool:
+        '''
+        문자인증 제한시간을 위한 타이머 설정 함수
+        '''
+        time_limit = timezone.now() - datetime.timedelta(minutes=5) # minutes 변수를 통해 문자인증 제한시간 설정
         result = cls.objects.filter(
             hp=p_num,
             auth=c_num,

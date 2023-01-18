@@ -7,6 +7,38 @@
     <title>Document</title>
 </head>
 <body>
+    {% if user.is_active %}
+
+        {{user.user_id}}님
+        <h2><a href="/enroll">카드등록</a></h2>
+        <h2><a href="/logout">로그아웃</a></h2>
+    
+    {% else %}
+
+    <form  method="POST" action=".">
+        {% csrf_token %}
+        <input
+            type="text"
+            class="form-control"
+            id="id_user_id"
+            name="user_id"
+            maxlength='17'
+        />
+
+        <input
+            type="password"
+            class="form-control"
+            id="id_password"
+            name="password"
+            maxlength='17'
+        />
+
+        <button type="submit" formaction="login/">로그인</button>
+    </form>
+
+
+
+
     <h2><a href="/register">회원가입</a></h2>
 
     {% load socialaccount %}
@@ -14,5 +46,7 @@
     <a href="{% provider_login_url 'naver' method='oauth2' %}">
     네이버 로그인
     </a>
+
+    {% endif %}
 </body>
 </html>
