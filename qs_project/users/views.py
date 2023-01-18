@@ -1,15 +1,20 @@
-from .forms import UserRegisterForm
+from .forms import UserRegisterForm, LoginForm
 from .models import User, AuthSMS
 from .modules import check_auth, register_errors
 
+from django.contrib.auth import login, logout, authenticate
 from django.shortcuts import render, redirect
-from django.views.generic import CreateView
+from django.utils.decorators import method_decorator
+from django.views.generic import CreateView, FormView
 
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from users.decorators import *
 
+
+### 소셜 로그인 사용 위한 url 변수 설정 ###
 BASE_URL = '/'
 KAKAO_CALLBACK_URI = BASE_URL + 'kakao/callback/'
 NAVER_CALLBACK_URI = BASE_URL + 'naver/callback/'
@@ -19,8 +24,44 @@ NAVER_CALLBACK_URI = BASE_URL + 'naver/callback/'
 def index_view(request):
     return render(request, 'users/index.html')
 
+def logout_view(request):
+    logout(request)
+    return redirect('/')
+
+
+@method_decorator(logout_message_required, name='dispatch')
+class LoginView(FormView):
+    '''
+    메인 페이지 view
+    로그인 위한 form request 
+    '''
+    template_name = 'users/index.html'
+    form_class = LoginForm
+    success_url = '/'
+
+    def form_valid(self, form):
+        user_id = form.cleaned_data.get("user_id")
+        password = form.cleaned_data.get("password")
+        user = authenticate(self.request, username=user_id, password=password)
+
+        if user is not None:
+            self.request.session['user_id'] = user_id
+            login(self.request, user)
+
+        return super().form_valid(form)
+
+    def form_invalid(self, form: LoginForm):
+        return redirect('/')
+
+
 
 class UserRegisterView(CreateView):
+    '''
+    회원가입 페이지 view
+    register_errors 함수를 통해 에러메세지 전달
+    check_auth 함수를 통해 휴대폰번호, 인증번호 매칭
+    에러메세지 없을시 form 저장하고 메인페이지로 redirect
+    '''
     model = User
     template_name = 'users/register.html'
     form_class = UserRegisterForm
@@ -48,8 +89,12 @@ class UserRegisterView(CreateView):
 
 
 
+# For API views
 class AuthView(APIView):
-
+    '''
+    받은 request data로 휴대폰번호를 통해 AuthSMS에 update_or_create
+    인증번호 난수 생성및 저장은 모델 안에 존재.
+    '''
     def post(self, request):
         try:
             p_num = request.data['hp']
