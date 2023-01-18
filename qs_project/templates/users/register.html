@@ -15,8 +15,13 @@
         <div class="">
             <p>
                 아이디
-
-                {{ form.user_id }}
+                <input
+                    type="text"
+                    class="form-control"
+                    id="id_user_id"
+                    name="user_id"
+                    maxlength='15'
+                />
 
                 {% for error in form.user_id.errors %}
                     {{ error }}
@@ -34,7 +39,13 @@
                 <p>
                     비밀번호
 
-                    {{ form.password2 }}
+                    <input
+                        type="password"
+                        class="form-control"
+                        id="id_password2"
+                        name="password2"
+                        maxlength='20'
+                    />
 
                     {% for error in form.password2.errors %}
                         {{ error }}
@@ -48,7 +59,13 @@
             <div class="">
                 <p>
                     비밀번호 확인
-                    {{ form.password1 }}
+                    <input
+                        type="password"
+                        class="form-control"
+                        id="id_password1"
+                        name="password1"
+                        maxlength='20'
+                    />
 
                     {% for error in form.password1.errors %}
                         {{ error }}
@@ -67,7 +84,13 @@
         <div class="">
             <p>
                 휴대폰 번호
-                {{ form.hp }}
+                <input
+                    type="text"
+                    class="form-control"
+                    id="id_hp"
+                    name="hp"
+                    maxlength='11'
+                />
 
                 {% for error in form.hp.errors %}
                     {{ error }}
@@ -75,7 +98,7 @@
                 {{ errors.hp }}
             </p>
 
-            <button class="" type="submit" formaction="../api/auth-message" formtarget="blankifr" onclick="btnActive()">
+            <button class="" type="submit" formaction="../api/v1/auth-message" formtarget="blankifr" onclick="btnActive()">
                 인증번호 전송
             </button>
 
