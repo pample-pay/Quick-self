@@ -54,8 +54,7 @@ INSTALLED_APPS = [
 
     # django-rest-framework
     'rest_framework',
-    'rest_framework_simplejwt.token_blacklist',
-    
+
     # django-allauth
     'allauth',
     'allauth.account',
@@ -65,6 +64,7 @@ INSTALLED_APPS = [
 
 INSTALLED_APPS += [
     'users.apps.UsersConfig',
+    'cards.apps.CardsConfig',
 ]
 
 MIDDLEWARE = [
@@ -82,7 +82,7 @@ ROOT_URLCONF = 'qs_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, "templates")],
+        'DIRS': [os.path.join(BASE_DIR, "templates"), os.path.join(BASE_DIR, 'templates', 'allauth')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -178,6 +178,7 @@ LOGOUT_REDIRECT_URL = '/'
 AUTH_USER_MODEL = "users.User"
 
 # Social login
+
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
