@@ -1,65 +1,71 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
+
     <div style="margin-bottom:100px">
         <h2>내 등록 카드</h2>
 
+        {% for card in card_sets %}
+            <form method="POST">
+                {% csrf_token %}
+                {{ card.card_token }}
+                <input type="hidden" name="_method" value="DELETE"/>
+                <button class="" type="submit" formaction="/api/v1/card-delete/{{ card.id }}">
+                    삭제
+                </button>
+            </form>
+            <br>
+        {% endfor %}
     </div>
+
     <div style="float: left;">
         <h2>카드정보 불러오기</h2>
+
         <form method="POST">
             {% csrf_token %}
-    
             <input
-                type="text"
-                id="id_card_num1"
-                name="card_num1"
-                maxlength='4'
-                size='4'
+                type="text" id="id_card_num1" name="card_num1"
+                maxlength='4' size='4'
+                value="{{ card_num1 }}"
             />
             <input
-                type="text"
-                id="id_card_num2"
-                name="card_num2"
-                maxlength='4'
-                size='4'
+                type="text" id="id_card_num2" name="card_num2"
+                maxlength='4' size='4'
+                value="{{ card_num2 }}"
             />
             <input
-                type="text"
-                id="id_card_num3"
-                name="card_num3"
-                maxlength='4'
-                size='4'
+                type="text" id="id_card_num3" name="card_num3"
+                maxlength='4' size='4'
+                value="{{ card_num3 }}"
             />
             <input
-                type="text"
-                id="id_card_num4"
-                name="card_num4"
-                maxlength='4'
-                size='4'
+                type="text" id="id_card_num4" name="card_num4"
+                maxlength='4' size='4'
+                value="{{ card_num4 }}"
             />
-
-            <button class="" type="submit" formaction="../api/v1/card-enroll">
+            <button class="" type="submit" formaction="/api/v1/card-check">
                 조회
             </button>
-
             <p>
-                유종 : <br>
-                금액 : <br>
-                포인트카드 :<br>
-                영수증 발행여부 :<br>
+                유종 : {{ oiling_type }} <br>
+                금액 : {{ oiling_price }} <br>
+                포인트카드 : {{ point_token }}<br>
+                영수증 발행여부 : {{ oiling_receipt }}<br>
             </p>
-    
+
+            <button class="" type="submit" formaction="/api/v1/card-check-enroll">
+                등록
+            </button>
         </form>
     </div>
-
-
 
     <div style="float: left; margin-left:100px">
         <h2>카드 등록하기</h2>
@@ -67,32 +73,20 @@
             {% csrf_token %}
             카드번호
             <input
-                type="text"
-                id="id_card_num1"
-                name="card_num1"
-                maxlength='4'
-                size='4'
+                type="text" id="id_card_num1" name="card_num1"
+                maxlength='4' size='4'
             />
             <input
-                type="text"
-                id="id_card_num2"
-                name="card_num2"
-                maxlength='4'
-                size='4'
+                type="text" id="id_card_num2" name="card_num2"
+                maxlength='4' size='4'
             />
             <input
-                type="text"
-                id="id_card_num3"
-                name="card_num3"
-                maxlength='4'
-                size='4'
+                type="text" id="id_card_num3" name="card_num3"
+                maxlength='4' size='4'
             />
             <input
-                type="text"
-                id="id_card_num4"
-                name="card_num4"
-                maxlength='4'
-                size='4'
+                type="text" id="id_card_num4" name="card_num4"
+                maxlength='4' size='4'
             />
 
             <br>
@@ -122,33 +116,22 @@
             <br>
             포인트카드번호
             <input
-                type="text"
-                id="id_point_num1"
-                name="point_num1"
-                maxlength='4'
-                size='4'
+                type="text" id="id_point_num1" name="point_num1"
+                maxlength='4'size='4'
             />
             <input
-                type="text"
-                id="id_point_num2"
-                name="point_num2"
-                maxlength='4'
-                size='4'
+                type="text" id="id_point_num2" name="point_num2"
+                maxlength='4' size='4'
             />
             <input
-                type="text"
-                id="id_point_num3"
-                name="point_num3"
-                maxlength='4'
-                size='4'
+                type="text" id="id_point_num3" name="point_num3"
+                maxlength='4' size='4'
             />
             <input
-                type="text"
-                id="id_point_num4"
-                name="point_num4"
-                maxlength='4'
-                size='4'
+                type="text" id="id_point_num4" name="point_num4"
+                maxlength='4' size='4'
             />
+
             <br>
             영수증발행여부
             <select name="oiling_receipt">
@@ -157,10 +140,11 @@
             </select>
             <br>
     
-            <button class="" type="submit" formaction="../api/v1/card-enroll">
+            <button class="" type="submit" formaction="/api/v1/card-enroll">
                 등록
             </button>
         </form>
     </div>
 </body>
+
 </html>
