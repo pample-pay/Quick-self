@@ -65,6 +65,7 @@ INSTALLED_APPS = [
 INSTALLED_APPS += [
     'users.apps.UsersConfig',
     'cards.apps.CardsConfig',
+    'restfulapi.apps.RestfulapiConfig',
 ]
 
 MIDDLEWARE = [
