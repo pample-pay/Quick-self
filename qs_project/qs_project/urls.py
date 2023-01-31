@@ -21,6 +21,7 @@ urlpatterns = [
 
     path('', include('users.urls')),
     path('', include('cards.urls')),
+    path('', include('restfulapi.urls')),
     
     path('accounts/', include('allauth.urls')),
 ]

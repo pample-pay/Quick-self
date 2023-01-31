@@ -1,5 +1,4 @@
 from .models import Card_Info, User_Card
-from .forms import CardEnrollForm
 
 from django.shortcuts import render, redirect
 from django.template.response import TemplateResponse
