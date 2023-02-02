@@ -59,7 +59,10 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'allauth.socialaccount.providers.naver'
+    'allauth.socialaccount.providers.naver',
+
+    # for bootstrap4
+    'bootstrap4',
 ]
 
 INSTALLED_APPS += [

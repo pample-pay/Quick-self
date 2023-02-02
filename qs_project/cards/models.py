@@ -11,7 +11,7 @@ class Card_Info(models.Model):
 
     point_token = models.CharField(max_length=50, verbose_name="포인트카드토큰", null=True, blank=True)
 
-    oiling_receipt = models.CharField(choices=RECEIPT_CHOICES, max_length=10, verbose_name="영수증발행여부")
+    oiling_receipt = models.CharField(choices=RECEIPT_CHOICES, max_length=10, verbose_name="영수증발행여부", default=0)
 
     def __str__(self):
         return str(self.card_token)
