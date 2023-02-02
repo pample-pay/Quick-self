@@ -1,12 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block content %}
+
     {% if user.is_active %}
 
         {{user.user_id}}님
@@ -33,10 +28,8 @@
             maxlength='17'
         />
 
-        <button type="submit" formaction="login/">로그인</button>
+                <input type="submit" class="btn btn-dark rounded-pill col-6 mt-3">
     </form>
-
-
 
 
     <h2><a href="/register">회원가입</a></h2>
@@ -48,5 +41,4 @@
     </a>
 
     {% endif %}
-</body>
-</html>
+    {% endblock %}
