@@ -6,10 +6,12 @@ from django.conf import settings
 class Card_Info(models.Model):
     card_token = models.CharField(max_length=50, verbose_name="카드토큰")
 
+    card_nickname = models.CharField(max_length=10, verbose_name="카드닉네임")
+
     oiling_type = models.CharField(choices=TYPE_CHOICES, max_length=10, verbose_name="유종")
     oiling_price = models.CharField(choices=PRICE_CHOICES, max_length=10, verbose_name="금액")
 
-    point_token = models.CharField(max_length=50, verbose_name="포인트카드토큰", null=True, blank=True)
+    point_number = models.CharField(max_length=50, verbose_name="포인트카드번호", null=True, blank=True)
 
     oiling_receipt = models.CharField(choices=RECEIPT_CHOICES, max_length=10, verbose_name="영수증발행여부")
 
@@ -23,6 +25,7 @@ class Card_Info(models.Model):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
+
 
 
 class User_Card(models.Model):
