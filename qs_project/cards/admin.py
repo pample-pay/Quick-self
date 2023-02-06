@@ -5,8 +5,10 @@ from django.contrib.auth.models import Group
 class UserAdmin(admin.ModelAdmin):
     list_display = (
         'card_token', 
+        'card_nickname',
         'oiling_type',
         'oiling_price',
+        'point_number',
         'oiling_receipt',
         )
     search_fields = ('card_token',)
