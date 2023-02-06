@@ -1,9 +1,11 @@
 .DS_Store
 db.sqlite3
+__pycache__/
 
 # secret key
 secrets.json
 naver_cloud_sens.json
 
-# wJJin's virtual env
+# virtual env
+myvenv/
 quickself/
