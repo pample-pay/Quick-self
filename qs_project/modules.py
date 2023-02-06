@@ -1,3 +1,4 @@
+import json
 import socket
 
 from datetime import datetime
@@ -14,8 +15,12 @@ def get_secret(setting, secrets):
         raise ImproperlyConfigured(error_msg)
 
 def get_token(card_num):
-    HOST = '211.33.136.19'
-    PORT = 23271
+
+    with open('C:\\test.json', 'r') as f:
+        json_data = json.load(f)
+
+    HOST = json_data["HOST"]
+    PORT = int(json_data["PORT"])
 
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.connect((HOST, PORT))
@@ -23,7 +28,6 @@ def get_token(card_num):
     Space = " "*150
     card_num
     CardData = "37" + card_num + Space[0:127 - 2 - len("4009131145851610=2506")]
-    CardData = "37" + "4009131145851610=2506" + Space[0:127 - 2 - len("4009131145851610=2506")]
 
     date = datetime.today().strftime("%Y%m%d")[2:]
     time = datetime.today().strftime("%H%M%S")   
