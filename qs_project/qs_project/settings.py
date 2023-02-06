@@ -38,7 +38,7 @@ SECRET_KEY = modules.get_secret("SECRET_KEY", secrets_key)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -59,7 +59,10 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'allauth.socialaccount.providers.naver'
+    'allauth.socialaccount.providers.naver',
+
+    # for bootstrap4
+    'bootstrap4',
 ]
 
 INSTALLED_APPS += [
