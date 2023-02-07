@@ -2,6 +2,7 @@ from .forms import UserRegisterForm, LoginForm
 from .models import User, AuthSMS
 from .modules import check_auth, register_errors
 
+from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from django.shortcuts import render, redirect
 from django.utils.decorators import method_decorator
@@ -14,22 +15,19 @@ from rest_framework.views import APIView
 from users.decorators import *
 
 
+
 ### 소셜 로그인 사용 위한 url 변수 설정 ###
 BASE_URL = '/'
 KAKAO_CALLBACK_URI = BASE_URL + 'kakao/callback/'
 NAVER_CALLBACK_URI = BASE_URL + 'naver/callback/'
 
 
-
-def index_view(request):
-    return render(request, 'users/index.html')
-
 def logout_view(request):
     logout(request)
     return redirect('/')
 
 
-@method_decorator(logout_message_required, name='dispatch')
+# @method_decorator(logout_message_required, name='dispatch')
 class LoginView(FormView):
     '''
     메인 페이지 view
@@ -38,6 +36,7 @@ class LoginView(FormView):
     template_name = 'users/index.html'
     form_class = LoginForm
     success_url = '/'
+
 
     def form_valid(self, form):
         user_id = form.cleaned_data.get("user_id")
@@ -51,7 +50,8 @@ class LoginView(FormView):
         return super().form_valid(form)
 
     def form_invalid(self, form: LoginForm):
-        return redirect('/')
+        messages.error(self.request, '아이디 또는 비밀번호를 확인해주세요.')
+        return super().form_invalid(form)
 
 
 
