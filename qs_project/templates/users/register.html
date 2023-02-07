@@ -1,84 +1,63 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-<form method="POST" novalidate>
+{% block content %}
+  <body class="text-center">
+    <main class="form-signin">
+        <form method="post" action=".">
+
     {% csrf_token %}
-    <div>
-        <!--아이디-->
-        <div class="">
-            <p>
-                아이디
-                <input
-                    type="text"
-                    class="form-control"
-                    id="id_user_id"
-                    name="user_id"
-                    maxlength='15'
-                />
-
-                {% for error in form.user_id.errors %}
-                    {{ error }}
-                {% endfor %}
-
-                {{ errors.user_id }}
-            </p>
-
+    
+        <!-- 아이디 입력 -->
+        <div class="form-floating">
+            <input type="id" class="form-control" id="floatingInput" placeholder="아이디"            
+            name="user_id"
+            maxlength='15'/>
+            <label for="floatingInput">ID (*)</label>
         </div>
+
+        <!--{% for error in form.user_id.errors %}
+            {{ error }}
+        {% endfor %}
+
+        {{ errors.user_id }}
+        -->
+
+        <p class="mt-1 text-muted"></p>
+
+        <!-- 패스워드 입력 -->
+        <div class="form-floating">
+            <input type="password" class="form-control" id="floatingPassword" placeholder="Password"            
+            name="password2"
+            maxlength='20'/>
+            <label for="floatingPassword">Password (*)</label>
+        </div>
+
+        <!--{% for error in form.password2.errors %}
+            {{ error }}
+        {% endfor %}
+
+        {{ errors.password2 }} -->
+
+        <p class="mt-1 text-muted"></p>  
         
-        <!--비밀번호-->
-        <div class="">
-            <!--비밀번호입력-->
-            <div class="">
-                <p>
-                    비밀번호
-
-                    <input
-                        type="password"
-                        class="form-control"
-                        id="id_password2"
-                        name="password2"
-                        maxlength='20'
-                    />
-
-                    {% for error in form.password2.errors %}
-                        {{ error }}
-                    {% endfor %}
-    
-                    {{ errors.password2 }}
-                </p>
-            </div>
-            
-            <!--비밀번호확인-->
-            <div class="">
-                <p>
-                    비밀번호 확인
-                    <input
-                        type="password"
-                        class="form-control"
-                        id="id_password1"
-                        name="password1"
-                        maxlength='20'
-                    />
-
-                    {% for error in form.password1.errors %}
-                        {{ error }}
-                    {% endfor %}
-    
-                    {{ errors.password1 }}
-                </p>
-
-                <small class="">
-                    최소 8개의 숫자와 문자 또는 특수기호를 입력해주세요. 일상적인 비밀번호는 사용할 수 없습니다.
-                </small>
-            </div>
+        <!--비밀번호확인-->
+        <div class="form-floating">
+            <input type="password" class="form-control" id="floatingPassword" placeholder="Password"            
+            name="password1"
+            maxlength='20'/>
+            <label for="floatingPassword">Password 확인 (*)</label>
         </div>
+
+        <!--{% for error in form.password2.errors %}
+            {{ error }}
+        {% endfor %}
+
+        {{ errors.password2 }}
+        -->
+
+        <small class="">
+            최소 8개의 숫자와 문자 또는 특수기호를 입력해주세요. 일상적인 비밀번호는 사용할 수 없습니다.
+        </small>
         
         <!--휴대폰번호-->
         <div class="">
@@ -139,4 +118,4 @@
         target.disabled = false;
     }
 </script>
-</html>
+{% endblock %}
