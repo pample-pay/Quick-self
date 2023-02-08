@@ -35,7 +35,7 @@ class LoginView(FormView):
     '''
     template_name = 'users/index.html'
     form_class = LoginForm
-    success_url = '/'
+    success_url = '/enroll'
 
 
     def form_valid(self, form):
