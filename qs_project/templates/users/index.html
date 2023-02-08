@@ -1,38 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
 {% load static %}
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="author" content="pample">
-    <meta name="generator" content="pample">
-    <meta name="description" content="">
-
-    <link rel="icon" href="{% static 'image/favicon.ico' %}" type="image/x-icon" sizes="16x16">
-
-    <title>QuickSelf</title>
-  
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sign-in/"> 
-
-    <!-- qucikself CSS -->
-    <link rel="stylesheet" href="{% static 'css/index.css' %}">
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-
-  </head>
-
   <body class="text-center">
-
-    {% if user.is_active %}
-
-        {{user.user_id}}님
-        <h2><a href="/enroll">카드등록</a></h2>
-        <h2><a href="/logout">로그아웃</a></h2>
-    
-    {% else %}
 
     <main class="form-signin">
         <form method="post" action=".">
@@ -98,8 +69,8 @@
     <div class="confirm-overlay"></div>
     {% endfor %} {% endif %}
 
-    {% endif %}  
-</body>
+  </body>
+{% endblock %}
 
 <script>
     $(".ok").on("click", function () {
