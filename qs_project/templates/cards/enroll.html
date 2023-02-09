@@ -1,87 +1,104 @@
-{% extends 'base.html' %}
-
-{% block content %}
 {% load static %}
-<body>
-    <main class="form-signin">
-        <div style="margin:auto">
-            {{user.user_id}}님
-    
-            <h2><a href="/logout">로그아웃</a></h2>
-        </div>
-            
-        <div style="margin:auto">
-            <h2>내 등록 카드</h2>
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="pample">
+        <meta name="generator" content="pample">
+        <title>QuickSelf</title>
+        <link rel="icon" href="{% static 'image/favicon.ico' %}" type="image/x-icon" sizes="16x16">
 
-            {% for card in card_sets %}
-            <form method="POST">
-                {% csrf_token %}               
-                
-                <div class="container">
-                    <div class="row">
-                       
-                        <div class="card">
-                            <div class="card-header">
-                            주유 카드
-                            </div>
-                            <img src="images/card-image.png" alt="" />
-                            <div class="card-body">
-                            <h5 class="card-title">Lorem</h5>
-                            <p class="card-text">{{ card.card_token }}</p>
-                            
-                            <button class="" type="submit" formaction="/api/v1/card-delete/{{ card.id }}">삭제</button>
-                            
-                            </div>
-                        
-                        </div>
-                        
-                                       
-                        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-                        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-                        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-                                        
-                
-                </div>
+        <!-- Bootstrap core CSS -->
+        <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
 
-            </form>       
-            {% endfor %}
-            <form method="POST">
-                {% csrf_token %}               
-                
-                <div class="container">
-                    <div class="row">
-                    
-                        <div class="card">
-                        <div class="card-header">
-                            주유 추가
-                        </div>
-                        <img src="images/card-image.png" alt="" />
-                        <div class="card-body">
-                            <h5 class="card-title">Lorem</h5>
-                            <p class="card-text">{{ card.card_token }}</p>
-                            
-                            <button class="" type="submit" formaction="/insert_enroll/">추가</button>
-                            
-                        </div>
-                        </div>
+        <link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+    </head>
+
+    <body>
+        <header>        
+            <nav class="navbar navbar-light fixed-bottom" style="background-color: #40c0c2;">
+                <div class="container-xl">
+                    <div class="navbar-brand d-flex align-items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/>
+                        </svg>
+                        <strong>{{user.user_id}}님</strong>
                     </div>
+
+                    <button class="" type="submit" onclick="location.href='/logout'">로그아웃</button>
+                    
+                </div>
+            </nav>
+        </header>
+
+        <main style="margin-bottom:50px">
+            <section class="py-3 text-center container">
+                <div class="row py-lg-1">
+                    <div class="col-lg-6 col-md-8 mx-auto">
+                        <h1 class="fw-light">QuickSelf</h1>
+                        <p class="lead text-muted">자주 사용하는 주유 카드를 등록 해 보세요</p>
+                        <!--
+                        <p>
+                        <a href="/insert_enroll" class="btn btn-primary my-2">추가</a>
+                        <a href="/insert_enroll" class="btn btn-secondary my-2">조회</a>
+                        </p>
+                        -->
+                    </div>
+                </div>
+            </section>
+      
+            <div>
+                <form method="POST">
+                    {% for card in card_sets %}
+                        <div class="container">
+                            <div class="row">
+                            
+                                <div class="card">
+                                    <div class="card-header" fill="#2DD1DD"  text-align="center" justify-content="center">
+                                        <!--<p class="card-text">{{ card.card_token }}</p>-->
+                                        <svg class="bd-placeholder-img card-img-top" width="100%" height="40" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+                                            <rect text-align="center" width="100%" height="100%" fill="#2DD1DD"/>
+                                            <text x="50%" y="50%" fill="#000000">{{ card.card_token }}</text>
+                                        </svg>
+                                    </div>
                                    
-                        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-                        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-                        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+                                    <div class="card-body">
+                                        <h5 class="card-title">카드 별칭</h5>
+                                        <p class="card-text">{{ card.card_token }}</p>
+                                        <p class="card-text">주유금액</p>
+                                        <button class="" type="submit" formaction="/api/v1/card-delete/{{ card.id }}">삭제</button>
+                                    </div>                                
+                                </div>
+
+                                <p></p>         
+                            </div>
+                        </div>                 
+                    {% endfor %}
+                </form>  
                 
-                <!--<input type="hidden" name="_method" value="DELETE"/>-->
+                <form method="POST">
+                    {% csrf_token %}               
+                    
+                    <div class="container">
+                        <div class="row">
+                        
+                            <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">주유 카드 추가</h5>
+                                <button class="" type="submit" formaction="/insert_enroll/">추가</button>
+                                
+                            </div>
+                            </div>
+                        </div>
+                    
 
-            </form>       
+                </form>       
 
-        </div>
-    </main>
-
-    
-    
-
-   
-    <br>
-    
-</body>
-{% endblock %}
+            </div>
+        
+        </main>
+            
+    </body>
+</html>
