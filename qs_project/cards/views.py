@@ -15,9 +15,14 @@ def enroll_view(request):
     context = {
         'card_sets': card_sets
     }
-
     return render(request, 'cards/enroll.html',context)
 
+def insert_card_view(request):
+    card_sets = User_Card.objects.filter(user_id = request.user)
+    context = {
+        'card_sets': card_sets
+    }
+    return render(request, 'cards/insert_enroll.html',context)
 
 ### For API views ###
 class CardEnrollView(APIView):
@@ -164,7 +169,7 @@ class CardCheckView(APIView):
             card_sets = User_Card.objects.filter(user_id = request.user)
             context['card_sets']= card_sets
 
-            return TemplateResponse(request, "cards/enroll.html", context)
+            return TemplateResponse(request, "cards/insert_enroll.html", context)
 
 
 

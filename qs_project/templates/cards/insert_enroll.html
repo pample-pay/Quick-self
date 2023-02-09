@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<body>
+    <main class="form-signin">
+        <div style="margin-bottom:100px">
+            {{user.user_id}}님
+    
+            <h2><a href="/logout">로그아웃</a></h2>
+        </div>
+        
+
+        <div style="float: left;">
+            <h2>카드정보 불러오기</h2>
+
+            <form method="POST">
+                {% csrf_token %}
+                <input
+                    type="text" id="id_card_num1" name="card_num1"
+                    maxlength='4' size='4'
+                    value="{{ card_num1 }}"
+                />
+                <input
+                    type="text" id="id_card_num2" name="card_num2"
+                    maxlength='4' size='4'
+                    value="{{ card_num2 }}"
+                />
+                <input
+                    type="text" id="id_card_num3" name="card_num3"
+                    maxlength='4' size='4'
+                    value="{{ card_num3 }}"
+                />
+                <input
+                    type="text" id="id_card_num4" name="card_num4"
+                    maxlength='4' size='4'
+                    value="{{ card_num4 }}"
+                />
+                <button class="" type="submit" formaction="/api/v1/card-check">
+                    조회
+                </button>
+                <p>
+                    유종 : {{ oiling_type }} <br>
+                    금액 : {{ oiling_price }} <br>
+                    포인트카드 : {{ point_number }}<br>
+                    영수증 발행여부 : {{ oiling_receipt }}<br>
+                </p>
+
+                <button class="" type="submit" formaction="/api/v1/card-check-enroll">
+                    등록
+                </button>
+            </form>
+        </div>
+
+        <div style="float: left; margin-left:100px">
+            <h2>카드 등록하기</h2>
+            <form method="POST" id="form2">
+                {% csrf_token %}
+                카드번호
+                <input
+                    type="text" id="id_card_num1" name="card_num1"
+                    maxlength='4' size='4'
+                    value="{{form2_card_num1}}"
+                />
+                <input
+                    type="text" id="id_card_num2" name="card_num2"
+                    maxlength='4' size='4'
+                    value="{{form2_card_num2}}"
+                />
+                <input
+                    type="text" id="id_card_num3" name="card_num3"
+                    maxlength='4' size='4'
+                    value="{{form2_card_num3}}"
+                />
+                <input
+                    type="text" id="id_card_num4" name="card_num4"
+                    maxlength='4' size='4'
+                    value="{{form2_card_num4}}"
+                />
+                <select name="card_where" value="2">
+                    <option value="3">카카오뱅크</option>
+                    <option value="2">우리은행</option>
+                    <option value="1">신한은행</option>
+                    <option value="0">국민은행</option>
+                </select>
+
+                <br>
+                유종
+                <select name="oiling_type">
+                    <option value="2">고급휘발유</option>
+                    <option value="1">휘발유</option>
+                    <option value="0">경유</option>
+                </select>
+                
+                <br>
+                금액
+                <select name="oiling_price">
+                    <option value="10">가득</option>
+                    <option value="9">10만원</option>
+                    <option value="8">9만원</option>
+                    <option value="7">8만원</option>
+                    <option value="6">7만원</option>
+                    <option value="5">6만원</option>
+                    <option value="4">5만원</option>
+                    <option value="3">4만원</option>
+                    <option value="2">3만원</option>
+                    <option value="1">2만원</option>
+                    <option value="0">1만원</option>
+                </select>
+
+                <br>
+                포인트카드번호
+                <input
+                    type="text" id="id_point_num1" name="point_num1"
+                    maxlength='4'size='4'
+                    value="{{form2_point_num1}}"
+                />
+                <input
+                    type="text" id="id_point_num2" name="point_num2"
+                    maxlength='4' size='4'
+                    value="{{form2_point_num2}}"
+                />
+                <input
+                    type="text" id="id_point_num3" name="point_num3"
+                    maxlength='4' size='4'
+                    value="{{form2_point_num3}}"
+                />
+                <input
+                    type="text" id="id_point_num4" name="point_num4"
+                    maxlength='4' size='4'
+                    value="{{form2_point_num4}}"
+                />
+
+                <br>
+                영수증발행여부
+                <select name="oiling_receipt">
+                    <option value="1">NO</option>
+                    <option value="0">YES</option>
+                </select>
+                <br>
+        
+                <button class="" type="submit" formaction="/api/v1/card-enroll">
+                    등록
+                </button>
+            </form>
+        </div>
+        <br>
+        <br>
+        {{error}}
+    </main>
+</body>
+{% endblock %}
