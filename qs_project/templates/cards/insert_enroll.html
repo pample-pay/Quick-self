@@ -13,14 +13,52 @@
         <!-- Bootstrap core CSS -->
         <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
 
-        <link rel="stylesheet" href="{% static 'css/main.css' %}">
+        <!--<link rel="stylesheet" href="{% static '../css/main.css' %}">-->
+        <style>
+            body {
+                height: 100%;
+                display: flex;
+                align-items: center;
+                padding-top: 40px;
+                padding-bottom: 40px;
+                background-color: #f5f5f5;
+            }
 
+            .form-main {
+                align-items: center;
+                width: 100%;
+                max-width: 450px;
+                padding: 15px;
+                margin: auto;
+            }
+
+            .btnSubmit{
+                width:100px;
+                margin:auto;
+                display:block;
+            }
+
+            .bd-placeholder-img {
+                font-size: 1.125rem;
+                text-anchor: middle;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                user-select: none;
+            }
+            
+            @media (min-width: 768px) {
+                .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+                }
+            }
+        </style>
     </head>
 
     <body>
         <header>        
             <nav class="navbar navbar-light fixed-top" style="background-color: #40c0c2;">
                 <div class="container-xl">
+                    
                     <div class="navbar-brand d-flex align-items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/>
                         </svg>
@@ -32,10 +70,9 @@
             </nav>
         </header>
 
-        <main class="form-signin" style="margin-top: 80px;">
-
-            <div style="float: left;">
-                <h2>카드정보 불러오기</h2>
+        <main class="form-main" style="margin-top: 20px;">
+            <section class="py-3 text-left container">                
+                <h2>카드 조회</h2>
 
                 <form method="POST">
                     {% csrf_token %}
@@ -69,22 +106,39 @@
                         영수증 발행여부 : {{ oiling_receipt }}<br>
                     </p>
 
-                    <button class="" type="submit" formaction="/api/v1/card-check-enroll">
+                    <button class="btnSubmit" type="submit" margin="auto" formaction="/api/v1/card-check-enroll">
                         등록
                     </button>
                 </form>
-            </div>
 
-            <div style="float: left; margin-left:100px">
-                <h2>카드 등록하기</h2>
+
+            </section>
+            
+                
+            
+
+            <!--<div style="float: left; margin-left:100px">-->
+            <div>
+                <p></p>
+                <p></p>
+                <h2>카드 등록</h2>
                 <form method="POST" id="form2">
                     {% csrf_token %}
                     카드번호
+                    <select name="card_where" value="2">
+                        <option value="3">카카오뱅크</option>
+                        <option value="2">우리은행</option>
+                        <option value="1">신한은행</option>
+                        <option value="0">국민은행</option>
+                    </select>
+
+                    <p></p>
                     <input
                         type="text" id="id_card_num1" name="card_num1"
                         maxlength='4' size='4'
                         value="{{form2_card_num1}}"
                     />
+                    
                     <input
                         type="text" id="id_card_num2" name="card_num2"
                         maxlength='4' size='4'
@@ -100,12 +154,7 @@
                         maxlength='4' size='4'
                         value="{{form2_card_num4}}"
                     />
-                    <select name="card_where" value="2">
-                        <option value="3">카카오뱅크</option>
-                        <option value="2">우리은행</option>
-                        <option value="1">신한은행</option>
-                        <option value="0">국민은행</option>
-                    </select>
+                    
 
                     <br>
                     유종
@@ -133,6 +182,7 @@
 
                     <br>
                     포인트카드번호
+                    <p></p>
                     <input
                         type="text" id="id_point_num1" name="point_num1"
                         maxlength='4'size='4'
@@ -162,7 +212,7 @@
                     </select>
                     <br>
             
-                    <button class="" type="submit" formaction="/api/v1/card-enroll">
+                    <button class="btnSubmit" type="submit" formaction="/api/v1/card-enroll">
                         등록
                     </button>
                 </form>
