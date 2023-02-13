@@ -4,6 +4,7 @@ from .modules import check_auth, register_errors
 
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, FormView
@@ -103,3 +104,25 @@ class AuthView(APIView):
         else:
             AuthSMS.objects.update_or_create(hp=p_num)
             return Response({'message': 'OK'})
+
+class IdValidation(APIView):
+    '''
+    중복 아이디가 있는지 검증하는 API
+    jquery blur로 AJAX통해 제출.
+    '''
+    def post(self, request):
+        try:
+            user_id = request.data['user_id']
+            try:
+                user = User.objects.get(user_id=user_id)
+            except Exception as e:
+                user = None
+            
+            context = {
+                'data' : "not exist" if user is None else "exist"
+            }
+
+        except KeyError:
+            return Response({'message': 'Bad Request'}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return JsonResponse(context)

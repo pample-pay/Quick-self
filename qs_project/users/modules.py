@@ -26,11 +26,11 @@ def register_errors(form)->dict:
         # if fcd['user_id'][0].isalpha() != True:
         #     errors['user_id'] = '아이디는 숫자로 시작할 수 없습니다.'
         if re.sub('[^A-Za-z0-9_]', '', fcd['user_id']) != fcd['user_id']:
-            errors['user_id'] = '아이디는 6~15자의 영문, 숫자, 아래첨자(_) 로 이루어져야 합니다.'
+            errors['user_id'] = '아이디는 4~15자의 영문, 숫자, 아래첨자(_) 로 이루어져야 합니다.'
         if len(fcd['user_id']) > 15:
-            errors['user_id'] = '아이디는 6~15자의 영문, 숫자, 아래첨자(_) 로 이루어져야 합니다.'
-        if len(fcd['user_id']) < 6:
-            errors['user_id'] = '아이디는 6~15자의 영문, 숫자, 아래첨자(_) 로 이루어져야 합니다.'
+            errors['user_id'] = '아이디는 4~15자의 영문, 숫자, 아래첨자(_) 로 이루어져야 합니다.'
+        if len(fcd['user_id']) < 4:
+            errors['user_id'] = '아이디는 4~15자의 영문, 숫자, 아래첨자(_) 로 이루어져야 합니다.'
 
     
     if 'password2' not in fcd:

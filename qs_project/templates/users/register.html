@@ -1,122 +1,207 @@
 {% extends 'base.html' %}
-
 {% block content %}
+
 {% load static %}
-  <body class="text-center">
+<head>
+    <link rel="stylesheet" href="{% static 'css/register.css' %}">
+</head>
+
+<body class="text-center">
+
+{% if user.is_authenticated %}
+<script type="text/javascript">
+  location.href="enroll";
+</script>
+{% else %}
+
     <main class="form-signin">
-        <form method="post" action=".">
+            <form method="post" action=".">
+            {% csrf_token %}
+            <img class="mb-4" src="{% static 'image/pample_logo_symbol.png' %}" alt="" width="72" height="72">
+            <h1 class="h3 mb-3 fw-normal">회원가입</h1>
 
-    {% csrf_token %}
-    
-        <!-- 아이디 입력 -->
-        <div class="form-floating">
-            <input type="id" class="form-control" id="floatingInput" placeholder="아이디"            
-            name="user_id"
-            maxlength='15'/>
-            <label for="floatingInput">ID (*)</label>
-        </div>
+            <!-- 아이디 입력 -->
+            <div class="form-floating">
+                <input type="id" class="form-control" id="floatingInput username" placeholder="아이디" name="user_id" maxlength='15'
+                    oninput="this.value = this.value.replace(/[^A-Za-z0-9]/g, '').replace(/(\..*)\./g, '$1');"/>
+                
+                <label for="floatingInput">
+                    <p class="p-name">ID</p>
+                    <p class="p-ex">(아이디는 4~15자리의 영문, 숫자여야 합니다.)</p>
+                </label>
+            </div>
 
-        <!--{% for error in form.user_id.errors %}
-            {{ error }}
-        {% endfor %}
-
-        {{ errors.user_id }}
-        -->
-
-        <p class="mt-1 text-muted"></p>
-
-        <!-- 패스워드 입력 -->
-        <div class="form-floating">
-            <input type="password" class="form-control" id="floatingPassword" placeholder="Password"            
-            name="password2"
-            maxlength='20'/>
-            <label for="floatingPassword">Password (*)</label>
-        </div>
-
-        <!--{% for error in form.password2.errors %}
-            {{ error }}
-        {% endfor %}
-
-        {{ errors.password2 }} -->
-
-        <p class="mt-1 text-muted"></p>  
-        
-        <!--비밀번호확인-->
-        <div class="form-floating">
-            <input type="password" class="form-control" id="floatingPassword" placeholder="Password"            
-            name="password1"
-            maxlength='20'/>
-            <label for="floatingPassword">Password 확인 (*)</label>
-        </div>
-
-        <!--{% for error in form.password2.errors %}
-            {{ error }}
-        {% endfor %}
-
-        {{ errors.password2 }}
-        -->
-
-        <small class="">
-            최소 8개의 숫자와 문자 또는 특수기호를 입력해주세요. 일상적인 비밀번호는 사용할 수 없습니다.
-        </small>
-        
-        <!--휴대폰번호-->
-        <div class="">
-            <p>
-                휴대폰 번호
-                <input
-                    type="text"
-                    class="form-control"
-                    id="id_hp"
-                    name="hp"
-                    maxlength='11'
-                />
-
-                {% for error in form.hp.errors %}
-                    {{ error }}
+            <span id="id_error" class="forms_error" style="margin-top: 2px;">
+                {% for error in form.user_id.errors %}
+                {{ error }} 
                 {% endfor %}
+            </span>
+
+            <p class="mt-1 text-muted"></p>
+
+            <!-- 패스워드 입력 -->
+            <div class="form-floating">
+                <input type="password" class="form-control form-border" id="floatingPassword2" placeholder="Password" name="password2" maxlength='20' style="border-radius: 0;"/>
+                <label for="floatingPassword2">
+                    <p class="p-name">Password</p>
+                    <p class="p-ex">(최소 8개 이상의 숫자, 문자를 입력해주세요.)</p>
+                </label>
+            </div>
+
+            <span id="pw2_error" class="forms_error" style="margin-top: -10px; text-align: left;">
+                {% for error in form.password2.errors %}
+                {{ error }}
+                {% endfor %}
+            </span>
+
+            <p class="mt-1 text-muted"></p>  
+            
+            <!--비밀번호확인-->
+            <div class="form-floating">
+                <input type="password" class="form-control form-border" id="floatingPassword1" placeholder="Password" name="password1" maxlength='20' style="border-radius: 0"/>
+                <label for="floatingPassword1">Password 확인</label>
+            </div>
+
+            <span id="pw1_error" class="forms_error" style="margin-top: -10px;">
+                {% for error in form.password1.errors %}
+                {{ error }}
+                {% endfor %}
+            </span>
+
+            <p class="mt-1 text-muted"></p> 
+
+            <!--휴대폰번호-->
+            <div class="form-floating">
+                <input type="text" class="form-control" id="id_hp floatingHP" placeholder="휴대폰번호" name="hp" maxlength='11' style=" float:left; border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; width: 77%; display: inline;"
+                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
+                <label for="floatingHP">
+                    <p class="p-name">H.P</p>
+                    <p class="p-ex">(하이픈(-)을 제외한 숫자로 입력해주세요.)</p>
+                </label>
+
+                <button class="w-20 btn btn-lg btn-primary btn-color auth-btn" type="submit" formaction="../api/v1/auth-message" formtarget="blankifr" onclick="btnActive()">
+                    인증번호<br> 전송
+                </button>
+            </div>
+
+            <span class="forms_error" style="margin-top: 2px;">
+                {% if errors.hp %}
                 {{ errors.hp }}
-            </p>
+                {% endif %}
+            </span>
 
-            <button class="" type="submit" formaction="../api/v1/auth-message" formtarget="blankifr" onclick="btnActive()">
-                인증번호 전송
-            </button>
+            <p class="mt-1 text-muted"></p>
 
-            <small class="form-text text-muted">
-                하이픈(-)을 제외한 숫자로만 입력해주세요.
-            </small>
-        </div>
-        <div class="">
-            <p>
-                인증 번호
-                <input
-                    type="text"
-                    class="form-control"
-                    id="id_auth"
-                    name="auth"
-                    maxlength='6'
-                    disabled
-                />
+            <div class="">
+                <input type="text" class="form-control" id="id_auth" name="auth" placeholder="인증번호 입력" maxlength='6' disabled
+                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
+            </div>
 
-                {{ errors.auth }}
-            </p>
-        </div>
+            {% if errors.auth %}
+            <span class="forms_error" style="margin-top:2px;">{{ errors.auth}}</span>
+            {% endif %}
 
-    </div>
+            <p class="mt-1 text-muted"></p>
 
-    <button class="" type="submit" formaction="">
-        회원가입
-    </button>
+            <button class="w-100 btn btn-lg btn-primary btn-color" type="submit">회원가입</button>  
+        
+        </form>
+        <a style="float:right; color: rgb(93, 93, 93); font-size: 12px;" href="/">이전 페이지로</a>
 
-</form>
-    
+{% endif %}
 </body>
+
 <iframe name='blankifr' style='display:none;'></iframe>
 <script>
+    // 유저 아이디
+    $(function() {
+        $('[name="user_id"]').blur(function() {
+            var user_id=$('[name="user_id"]').val()
+
+            if (user_id.length<4 || user_id.length>16){
+                document.getElementById("id_error").innerHTML="아이디 길이는 4~15자 사이여야 합니다.";
+            }
+            else{
+                document.getElementById("id_error").innerHTML="";
+
+                $.ajax({
+                    type: "POST",
+                    url: "/api/v1/id-validation",
+                    data: {'user_id' : user_id},
+                    success: function(response) {
+                        console.log(response.data);
+                        if (response.data == "exist") {
+                            document.getElementById("id_error").innerHTML="중복되는 아이디 입니다. 다른 아이디를 사용해주세요.";
+                        }
+                        else{
+                            document.getElementById("id_error").innerHTML="";
+                        }
+
+                    },
+                    error: function(error) {
+                        console.log("ID validation error!");
+                    }
+                });
+            }
+        });
+    });
+
+    // 유저 비밀번호
+    $(function() {
+        $('[name="password2"]').blur(function() {
+            var password2=$('[name="password2"]').val()
+            const check_num = /^[0-9]+$/;
+            const check_str = /^(?:[a-zA-Z\[\]\^\$\.\|\?\*\+\(\)\\~`\!@#%&\-_+={}'""<>:;,\n]+)$/;
+
+            if (password2.length<8){
+                document.getElementById("pw2_error").innerHTML="비밀번호가 너무 짧습니다. 최소 8문자를 포함해야 합니다.";
+            }
+            else if(check_num.test(password2)){
+                document.getElementById("pw2_error").innerHTML="비밀번호는 숫자, 문자를 모두 포함해야합니다.";
+                console.log('sdfdsfsd')
+            }
+            else if(check_str.test(password2)){
+                document.getElementById("pw2_error").innerHTML="비밀번호는 숫자, 문자를 모두 포함해야합니다.";
+            }
+            else{
+                document.getElementById("pw2_error").innerHTML="";
+            }
+        });
+    });
+
+    // 유저 비밀번호 확인
+    $(function() {
+        $('[name="password1"]').blur(function() {
+            var password1=$('[name="password1"]').val()
+            var password2=$('[name="password2"]').val()
+
+            if (password1 == password2){
+                document.getElementById("pw1_error").innerHTML="";
+            }
+            else{
+                document.getElementById("pw1_error").innerHTML="비밀번호가 일치하지 않습니다.";
+            }
+        });
+    });
+
+    // 휴대폰 번호
+    $(function() {
+        $('[name="hp"]').blur(function() {
+            var hp=$('[name="hp"]').val()
+
+            if (password1 == password2){
+                document.getElementById("pw1_error").innerHTML="";
+            }
+            else{
+                document.getElementById("pw1_error").innerHTML="비밀번호가 일치하지 않습니다.";
+            }
+        });
+    });
 
     function btnActive(){
         const target = document.getElementById('id_auth');
         target.disabled = false;
     }
 </script>
+
 {% endblock %}
