@@ -1,0 +1,29 @@
+.forms_error  {
+    color:red;
+    font-size: 8px;
+    float: left;
+    margin-left: 12px;
+}
+
+.form-border {
+    border-radius: 5px;
+}
+
+.p-name {
+    display: inline;
+}
+
+.p-ex {
+    display: inline;
+    font-size: 8px;
+}
+
+.auth-btn {
+    width:68.6px;
+    height: 58px;
+    font-size: 10px;
+    font-weight: 700;
+    display: inline;
+    border-radius: 0px;
+    border-bottom-right-radius: 3px;
+}
