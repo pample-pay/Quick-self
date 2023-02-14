@@ -17,6 +17,7 @@ def enroll_view(request):
     }
     return render(request, 'cards/enroll.html',context)
 
+
 def insert_card_view(request):
     card_sets = User_Card.objects.filter(user_id = request.user)
     context = {
