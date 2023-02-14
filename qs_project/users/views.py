@@ -126,3 +126,25 @@ class IdValidation(APIView):
             return Response({'message': 'Bad Request'}, status=status.HTTP_400_BAD_REQUEST)
         else:
             return JsonResponse(context)
+
+class HPValidation(APIView):
+    '''
+    중복 휴대폰 번호가 있는지 검증하는 API
+    jquery blur로 AJAX통해 제출.
+    '''
+    def post(self, request):
+        try:
+            hp = request.data['hp']
+            try:
+                user = User.objects.get(hp=hp)
+            except Exception as e:
+                user = None
+            
+            context = {
+                'data' : "not exist" if user is None else "exist"
+            }
+
+        except KeyError:
+            return Response({'message': 'Bad Request'}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return JsonResponse(context)

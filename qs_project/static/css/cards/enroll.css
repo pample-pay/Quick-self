@@ -1,0 +1,112 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto+Mono:400,700");
+
+@media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+    font-size: 3.5rem;
+    }
+}
+
+body {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background-color: #f5f5f5;
+}
+
+a:link { color: rgb(0, 0, 0); text-decoration: none;}
+a:visited { color: black; text-decoration: none;}
+a:hover { color: blue; text-decoration: none;}
+
+.navbar-color {
+    background-color: rgb(108,188,202);
+}
+
+.form-main {
+    align-items: center;
+    width: 100%;
+    max-width: 450px;
+    padding: 15px;
+    margin: auto;
+}
+
+.btnSubmit{
+    width:100px;
+    margin-top: 20px;
+    display:inline;
+}
+
+.bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+  
+.sign-out {
+    color: black;
+    outline: none;
+    text-decoration: none;
+    transition: all 0.1s;
+}
+
+.sign-out:focus,
+.sign-out:hover,
+.sign-out:active {
+    color: black;
+    background-color: grey;
+    text-decoration: none;
+}
+
+.sign-out > span {
+    margin: 0.1em;
+}
+
+.card-header-pos {
+    margin-top: 0.3%;
+    margin-left: -2.5%;
+    width: 105%;
+    background-color: rgba(108,188,202,0.80);
+    border-bottom: 1.5px solid rgb(108,188,202);
+    text-align: center;
+}
+
+.card-pos {
+    box-shadow: 1px 1px 3px 1px #dadce0;
+}
+
+h4.card-title:after {
+    content: "";
+    display: block;
+    width: 70px;
+    border-bottom: 1px solid #bcbcbc;
+    margin: 15px 0px;
+}
+
+.plus {
+    display:inline-block;
+    width:50px;
+    height:50px;
+  
+    background:
+      linear-gradient(#fff 0 0),
+      linear-gradient(#fff 0 0),
+      rgba(108,188,202,0.80);
+    background-position:center;
+    background-size: 50% 2px,2px 50%; /*thickness = 2px, length = 50% (25px)*/
+    background-repeat:no-repeat;
+}
+
+.radius {
+    border-radius:50%;
+    border: 0px;
+}
+
+.card2-pos {
+    margin-top: 10px;
+    text-align: center;
+    background-color: rgb(245,245,245);
+    box-shadow: 1px 1px 3px 1px #dadce0 inset;
+}
