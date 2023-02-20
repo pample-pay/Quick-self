@@ -1,5 +1,8 @@
+import modules
+
 from .models import Card_Info, User_Card
 from .restricts import *
+from users.decorators import *
 
 from django.shortcuts import render, redirect
 from django.template.response import TemplateResponse
@@ -9,23 +12,157 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 
+@login_message_required
 def enroll_view(request):
+    if request.user.is_authenticated:
+        card_sets = User_Card.objects.filter(user_id = request.user)
+        context = {
+            'card_sets': card_sets
+            }
+        return render(request, 'cards/enroll.html',context)
+    
+    else:
+        return render(request, 'cards/enroll.html')
 
-    card_sets = User_Card.objects.filter(user_id = request.user)
-    context = {
-        'card_sets': card_sets
-    }
-    return render(request, 'cards/enroll.html',context)
 
-
+@login_message_required
 def insert_card_view(request):
-    card_sets = User_Card.objects.filter(user_id = request.user)
-    context = {
-        'card_sets': card_sets
-    }
-    return render(request, 'cards/insert_enroll.html',context)
+    return render(request, 'cards/insert_enroll.html')
+
 
 ### For API views ###
+class CardInfoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Card_Info
+        fields = [
+            'oiling_type',
+            'oiling_price',
+            'point_number',
+            'oiling_receipt',
+        ]
+
+
+class CardCheckView(APIView):
+
+    def post(self, request):
+
+        try:
+            ccf = request.data
+            card_num = ccf['card_num1']+ccf['card_num2']+ccf['card_num3']+ccf['card_num4']
+
+
+            if len(card_num) != 16:
+                context = {}
+                
+                context['card_num1'] = ccf['card_num1']
+                context['card_num2'] = ccf['card_num2']
+                context['card_num3'] = ccf['card_num3']
+                context['card_num4'] = ccf['card_num4']
+
+                context['error'] = "카드 번호를 확인해주세요."
+                
+                return TemplateResponse(request, "cards/insert_enroll.html", context)
+
+            #####################
+            card_token39, card_token05 = modules.get_token(card_num)
+            #####################
+
+            print(card_token39)
+            print(card_token05)
+
+
+            try:
+                card_info = Card_Info.objects.get(card_token1 = card_token39).get(card_token2 = card_token05)
+                serializer_class = CardInfoSerializer(card_info)
+                context = serializer_class.data
+                
+                context['oiling_type'] = Card_Info(oiling_type=context['oiling_type']).get_oiling_type_display()
+                context['oiling_price'] = Card_Info(oiling_price=context['oiling_price']).get_oiling_price_display()
+                context['oiling_receipt'] = Card_Info(oiling_receipt=context['oiling_receipt']).get_oiling_receipt_display()
+
+                context['point_number'] = '없음'
+                
+                if card_info.point_number:
+
+                    context['point_number'] = (
+                        card_info.point_number[:4] + '-'
+                        + card_info.point_number[4:8] + '-'
+                        + card_info.point_number[8:12] + '-'
+                        + card_info.point_number[12:16]
+                    )
+
+
+            except:
+                context = {}
+                context['error'] = "등록된 카드가 존재하지 않습니다."
+
+            context['card_num1'] = ccf['card_num1']
+            context['card_num2'] = ccf['card_num2']
+            context['card_num3'] = ccf['card_num3']
+            context['card_num4'] = ccf['card_num4']
+
+
+        except KeyError:
+            return Response({'message': 'Bad Request'}, status=status.HTTP_400_BAD_REQUEST)
+
+        else:
+            return TemplateResponse(request, "cards/insert_enroll.html", context)
+
+
+class CardCheckEnrollView(APIView):
+
+    def post(self, request):
+
+        try:
+            ccf = request.data
+            card_num = ccf['card_num1']+ccf['card_num2']+ccf['card_num3']+ccf['card_num4']
+
+
+            if len(card_num) != 16:
+                context = {}
+                
+                context['card_num1'] = ccf['card_num1']
+                context['card_num2'] = ccf['card_num2']
+                context['card_num3'] = ccf['card_num3']
+                context['card_num4'] = ccf['card_num4']
+
+                context['error'] = "카드 번호를 확인해주세요."
+                
+                return TemplateResponse(request, "cards/insert_enroll.html", context)
+
+            #####################
+            card_token39, card_token05 = modules.get_token(card_num)
+            #####################
+
+
+            try:
+                Card_Info.objects.get(card_token1 = card_token39).get(card_token2 = card_token05)
+
+            except:
+                context = {}
+                
+                context['card_num1'] = ccf['card_num1']
+                context['card_num2'] = ccf['card_num2']
+                context['card_num3'] = ccf['card_num3']
+                context['card_num4'] = ccf['card_num4']
+                
+                context['error'] = "등록된 카드가 존재하지 않습니다."
+
+                return TemplateResponse(request, "cards/insert_enroll.html", context)
+
+        except KeyError:
+            return Response({'message': 'Bad Request'}, status=status.HTTP_400_BAD_REQUEST)
+
+        else:
+
+            User_Card.objects.update_or_create(
+                user_id=request.user,
+                card_token=Card_Info.objects.get(card_token1=card_token39).get(card_token2=card_token05)
+            )
+
+            return redirect('/enroll')
+
+
 class CardEnrollView(APIView):
 
     def post(self, request):
@@ -84,7 +221,6 @@ class CardEnrollView(APIView):
                     'card_sets': card_sets,
                     'error': '포인트 카드 번호를 확인해 주세요.'
                 }
-                print(context)
                 return TemplateResponse(request, "cards/enroll.html", context)
 
 
@@ -117,91 +253,6 @@ class CardEnrollView(APIView):
 
             return TemplateResponse(request, "cards/enroll.html", context)
 
-
-
-class CardInfoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Card_Info
-        fields = [
-            'oiling_type',
-            'oiling_price',
-            'point_number',
-            'oiling_receipt',
-        ]
-
-
-class CardCheckView(APIView):
-
-    def post(self, request):
-
-        try:
-            ccf = request.data
-            card_num = ccf['card_num1']+ccf['card_num2']+ccf['card_num3']+ccf['card_num4']
-
-            #####################
-            card_token = card_num
-            #####################
-
-            card_info = ''
-
-            card_info = Card_Info.objects.get(card_token = card_token)
-            serializer_class = CardInfoSerializer(card_info)
-
-            context = serializer_class.data
-        
-            context['card_num1'] = ccf['card_num1']
-            context['card_num2'] = ccf['card_num2']
-            context['card_num3'] = ccf['card_num3']
-            context['card_num4'] = ccf['card_num4']
-
-            context['oiling_type'] = Card_Info(oiling_type=context['oiling_type']).get_oiling_type_display()
-            context['oiling_price'] = Card_Info(oiling_price=context['oiling_price']).get_oiling_price_display()
-            context['oiling_receipt'] = Card_Info(oiling_receipt=context['oiling_receipt']).get_oiling_receipt_display()
-
-            context['point_number'] = '없음'
-            if card_info.point_number:
-                context['point_number'] = card_info.point_number
-
-        except KeyError:
-            return Response({'message': 'Bad Request'}, status=status.HTTP_400_BAD_REQUEST)
-        
-        else:
-
-            card_sets = User_Card.objects.filter(user_id = request.user)
-            context['card_sets']= card_sets
-
-            return TemplateResponse(request, "cards/insert_enroll.html", context)
-
-
-
-class CardCheckEnrollView(APIView):
-
-    def post(self, request):
-
-        try:
-            ccf = request.data
-            card_num = ccf['card_num1']+ccf['card_num2']+ccf['card_num3']+ccf['card_num4']
-
-            ####
-            card_token = card_num
-            ####
-
-
-        except KeyError:
-            return Response({'message': 'Bad Request'}, status=status.HTTP_400_BAD_REQUEST)
-        
-        else:
-            User_Card.objects.update_or_create(
-                user_id=request.user,
-                card_token=Card_Info.objects.get(card_token=card_token),
-            )
-
-            card_sets = User_Card.objects.filter(user_id = request.user)
-            context = {
-                'card_sets': card_sets
-            }
-
-            return TemplateResponse(request, "cards/enroll.html", context)
 
 class CardDelete(APIView):
 

@@ -1,3 +1,4 @@
+import os
 import json
 import socket
 
@@ -16,18 +17,21 @@ def get_secret(setting, secrets):
 
 def get_token(card_num):
 
-    with open('C:\\test.json', 'r') as f:
-        json_data = json.load(f)
+    BASE_DIR = getattr(settings, 'BASE_DIR', None)
+    file_path = "socket_port.json" # 통신 API 소켓 파일
 
-    HOST = json_data["HOST"]
-    PORT = int(json_data["PORT"])
+    with open(os.path.join(BASE_DIR,file_path), encoding='utf-8') as f:
+        socket_port = json.load(f)
+
+    HOST = socket_port["HOST"]
+    PORT = int(socket_port["PORT"])
 
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.connect((HOST, PORT))
 
     Space = " "*150
-    card_num
-    CardData = "37" + card_num + Space[0:127 - 2 - len("4009131145851610=2506")]
+    card_num = card_num+"=0000"
+    CardData = "37" + card_num + Space[0:127 - 2 - len(card_num)]
 
     date = datetime.today().strftime("%Y%m%d")[2:]
     time = datetime.today().strftime("%H%M%S")   

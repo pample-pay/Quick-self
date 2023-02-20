@@ -1,225 +1,242 @@
+{% extends 'base.html' %}
+{% block content %}
+
 {% load static %}
-<!doctype html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="">
-        <meta name="author" content="pample">
-        <meta name="generator" content="pample">
-        <title>QuickSelf</title>
-        <link rel="icon" href="{% static 'image/favicon.ico' %}" type="image/x-icon" sizes="16x16">
 
-        <!-- Bootstrap core CSS -->
-        <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+<head>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.2/css/bootstrap.min.css'>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+    
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/cards/insert_enroll.css' %}">
 
-        <!--<link rel="stylesheet" href="{% static '../css/main.css' %}">-->
-        <style>
-            body {
-                height: 100%;
-                display: flex;
-                align-items: center;
-                padding-top: 40px;
-                padding-bottom: 40px;
-                background-color: #f5f5f5;
-            }
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+</head>
 
-            .form-main {
-                align-items: center;
-                width: 100%;
-                max-width: 450px;
-                padding: 15px;
-                margin: auto;
-            }
+{% if user.is_anonymous %}
+<script type="text/javascript">
+    location.href="/";
+</script>
 
-            .btnSubmit{
-                width:100px;
-                margin:auto;
-                display:block;
-            }
-
-            .bd-placeholder-img {
-                font-size: 1.125rem;
-                text-anchor: middle;
-                -webkit-user-select: none;
-                -moz-user-select: none;
-                user-select: none;
-            }
-            
-            @media (min-width: 768px) {
-                .bd-placeholder-img-lg {
-                font-size: 3.5rem;
-                }
-            }
-        </style>
-    </head>
-
-    <body>
-        <header>        
-            <nav class="navbar navbar-light fixed-top" style="background-color: #40c0c2;">
-                <div class="container-xl">
-                    
-                    <div class="navbar-brand d-flex align-items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/>
-                        </svg>
-                        <strong>{{user.user_id}}님</strong>
+{% else %}
+<body>
+    <header>
+        <nav class="navbar navbar-light navbar-color fixed-top"><div class="container-xl">
+                <div class="navbar-brand d-flex align-items-center">
+                <!-- <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg> -->
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24" height="24"
+                    fill="none" stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1"
+                    class="bi bi-person"
+                    viewBox="0 0 16 16">
+                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+                </svg>
+                <a href="/enroll/">
+                    <div style="margin-left: 5px;">
+                        {{user.user_id}}님
                     </div>
-
-                    <button class="" type="submit" onclick="location.href='/logout'">로그아웃</button>
-                </div>
-            </nav>
-        </header>
-
-        <main class="form-main" style="margin-top: 20px;">
-            <section class="py-3 text-left container">                
-                <h2>카드 조회</h2>
-
-                <form method="POST">
-                    {% csrf_token %}
-                    <input
-                        type="text" id="id_card_num1" name="card_num1"
-                        maxlength='4' size='4'
-                        value="{{ card_num1 }}"
-                    />
-                    <input
-                        type="text" id="id_card_num2" name="card_num2"
-                        maxlength='4' size='4'
-                        value="{{ card_num2 }}"
-                    />
-                    <input
-                        type="text" id="id_card_num3" name="card_num3"
-                        maxlength='4' size='4'
-                        value="{{ card_num3 }}"
-                    />
-                    <input
-                        type="text" id="id_card_num4" name="card_num4"
-                        maxlength='4' size='4'
-                        value="{{ card_num4 }}"
-                    />
-                    <button class="" type="submit" formaction="/api/v1/card-check">
-                        조회
-                    </button>
-                    <p>
-                        유종 : {{ oiling_type }} <br>
-                        금액 : {{ oiling_price }} <br>
-                        포인트카드 : {{ point_number }}<br>
-                        영수증 발행여부 : {{ oiling_receipt }}<br>
-                    </p>
-
-                    <button class="btnSubmit" type="submit" margin="auto" formaction="/api/v1/card-check-enroll">
-                        등록
-                    </button>
-                </form>
-
-
-            </section>
-            
-                
-            
-
-            <!--<div style="float: left; margin-left:100px">-->
-            <div>
-                <p></p>
-                <p></p>
-                <h2>카드 등록</h2>
-                <form method="POST" id="form2">
-                    {% csrf_token %}
-                    카드번호
-                    <select name="card_where" value="2">
-                        <option value="3">카카오뱅크</option>
-                        <option value="2">우리은행</option>
-                        <option value="1">신한은행</option>
-                        <option value="0">국민은행</option>
-                    </select>
-
-                    <p></p>
-                    <input
-                        type="text" id="id_card_num1" name="card_num1"
-                        maxlength='4' size='4'
-                        value="{{form2_card_num1}}"
-                    />
-                    
-                    <input
-                        type="text" id="id_card_num2" name="card_num2"
-                        maxlength='4' size='4'
-                        value="{{form2_card_num2}}"
-                    />
-                    <input
-                        type="text" id="id_card_num3" name="card_num3"
-                        maxlength='4' size='4'
-                        value="{{form2_card_num3}}"
-                    />
-                    <input
-                        type="text" id="id_card_num4" name="card_num4"
-                        maxlength='4' size='4'
-                        value="{{form2_card_num4}}"
-                    />
-                    
-
-                    <br>
-                    유종
-                    <select name="oiling_type">
-                        <option value="2">고급휘발유</option>
-                        <option value="1">휘발유</option>
-                        <option value="0">경유</option>
-                    </select>
-                    
-                    <br>
-                    금액
-                    <select name="oiling_price">
-                        <option value="10">가득</option>
-                        <option value="9">10만원</option>
-                        <option value="8">9만원</option>
-                        <option value="7">8만원</option>
-                        <option value="6">7만원</option>
-                        <option value="5">6만원</option>
-                        <option value="4">5만원</option>
-                        <option value="3">4만원</option>
-                        <option value="2">3만원</option>
-                        <option value="1">2만원</option>
-                        <option value="0">1만원</option>
-                    </select>
-
-                    <br>
-                    포인트카드번호
-                    <p></p>
-                    <input
-                        type="text" id="id_point_num1" name="point_num1"
-                        maxlength='4'size='4'
-                        value="{{form2_point_num1}}"
-                    />
-                    <input
-                        type="text" id="id_point_num2" name="point_num2"
-                        maxlength='4' size='4'
-                        value="{{form2_point_num2}}"
-                    />
-                    <input
-                        type="text" id="id_point_num3" name="point_num3"
-                        maxlength='4' size='4'
-                        value="{{form2_point_num3}}"
-                    />
-                    <input
-                        type="text" id="id_point_num4" name="point_num4"
-                        maxlength='4' size='4'
-                        value="{{form2_point_num4}}"
-                    />
-
-                    <br>
-                    영수증발행여부
-                    <select name="oiling_receipt">
-                        <option value="1">NO</option>
-                        <option value="0">YES</option>
-                    </select>
-                    <br>
-            
-                    <button class="btnSubmit" type="submit" formaction="/api/v1/card-enroll">
-                        등록
-                    </button>
-                </form>
+                </a>
             </div>
-            <br>
-            <br>
-            {{error}}
-        </main>
-    </body>
-</html>
+                
+            <a class="sign-out pull-right" href="/logout">
+                <span>
+                    Logout
+                </span>
+                <i class="fa fa-sign-out"></i>
+            </a>
+        </div></nav>
+    </header>
+    
+    <main class="form-main">
+        <div class="container"><div class="row">
+            <div class="card card-pos">
+                <div class="card-body">
+                    <h2 class="card-title" style="margin-top: 16px;">카드 조회</h2>
+
+                    <p class="check-ex">기존에 Quickself를 이용하셨던 정보를 불러와서 사용할 수 있습니다.</p>
+
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="card-check" style="padding-top: 0px;">
+
+                            <input
+                                class="form-control check-form"
+                                type="text" id="id_card_num1" name="card_num1"
+                                maxlength='4' size='4'
+                                value="{{ card_num1 }}"
+                            />
+                            <input
+                                class="form-control check-form"
+                                type="text" id="id_card_num2" name="card_num2"
+                                maxlength='4' size='4'
+                                value="{{ card_num2 }}"
+                            />
+                            <input
+                                class="form-control check-form"
+                                type="text" id="id_card_num3" name="card_num3"
+                                maxlength='4' size='4'
+                                value="{{ card_num3 }}"
+                            />
+                            <input
+                                class="form-control check-form"
+                                type="text" id="id_card_num4" name="card_num4"
+                                maxlength='4' size='4'
+                                value="{{ card_num4 }}"
+                            />
+
+                            <button class="btn checkbtn-ps" style="margin-bottom: 2px;" type="submit" formaction="/api/v1/card-check">
+                                조회
+                            </button>
+
+                        </div>
+
+                        <p>
+                            유종 : {{ oiling_type }} <br>
+                            금액 : {{ oiling_price }} <br>
+                            포인트카드 : {{ point_number }}<br>
+                            영수증 발행여부 : {{ oiling_receipt }}<br>
+                        </p>
+    
+                        <button class="btnSubmit" type="submit" margin="auto" formaction="/api/v1/card-check-enroll">
+                            등록
+                        </button>
+                    </form>
+
+                </div>                                
+            </div>
+            <p></p>
+        </div></div>
+
+        <div class="container"><div class="row">
+            <div class="card card-pos">
+                <div class="card-body">
+                    <h2>카드 등록</h2>
+                    <form method="POST" id="form2">
+                        {% csrf_token %}
+                        카드번호
+                        <select name="card_where" value="2">
+                            <option value="3">카카오뱅크</option>
+                            <option value="2">우리은행</option>
+                            <option value="1">신한은행</option>
+                            <option value="0">국민은행</option>
+                        </select>
+    
+                        <p></p>
+                        <input
+                            type="text" id="id_card_num1" name="card_num1"
+                            maxlength='4' size='4'
+                            value="{{form2_card_num1}}"
+                        />
+                        
+                        <input
+                            type="text" id="id_card_num2" name="card_num2"
+                            maxlength='4' size='4'
+                            value="{{form2_card_num2}}"
+                        />
+                        <input
+                            type="text" id="id_card_num3" name="card_num3"
+                            maxlength='4' size='4'
+                            value="{{form2_card_num3}}"
+                        />
+                        <input
+                            type="text" id="id_card_num4" name="card_num4"
+                            maxlength='4' size='4'
+                            value="{{form2_card_num4}}"
+                        />
+                        
+    
+                        <br>
+                        유종
+                        <select name="oiling_type">
+                            <option value="2">고급휘발유</option>
+                            <option value="1">휘발유</option>
+                            <option value="0">경유</option>
+                        </select>
+                        
+                        <br>
+                        금액
+                        <select name="oiling_price">
+                            <option value="10">가득</option>
+                            <option value="9">10만원</option>
+                            <option value="8">9만원</option>
+                            <option value="7">8만원</option>
+                            <option value="6">7만원</option>
+                            <option value="5">6만원</option>
+                            <option value="4">5만원</option>
+                            <option value="3">4만원</option>
+                            <option value="2">3만원</option>
+                            <option value="1">2만원</option>
+                            <option value="0">1만원</option>
+                        </select>
+    
+                        <br>
+                        포인트카드번호
+                        <p></p>
+                        <input
+                            type="text" id="id_point_num1" name="point_num1"
+                            maxlength='4'size='4'
+                            value="{{form2_point_num1}}"
+                        />
+                        <input
+                            type="text" id="id_point_num2" name="point_num2"
+                            maxlength='4' size='4'
+                            value="{{form2_point_num2}}"
+                        />
+                        <input
+                            type="text" id="id_point_num3" name="point_num3"
+                            maxlength='4' size='4'
+                            value="{{form2_point_num3}}"
+                        />
+                        <input
+                            type="text" id="id_point_num4" name="point_num4"
+                            maxlength='4' size='4'
+                            value="{{form2_point_num4}}"
+                        />
+    
+                        <br>
+                        영수증발행여부
+                        <select name="oiling_receipt">
+                            <option value="1">NO</option>
+                            <option value="0">YES</option>
+                        </select>
+                        <br>
+                
+                        <button class="btnSubmit" type="submit" formaction="/api/v1/card-enroll">
+                            등록
+                        </button>
+                    </form>
+
+                </div>                                
+            </div>
+            <p></p>
+        </div></div>
+    </main>
+
+    {% if error %}
+    <div class="moveconfirm active">
+        <div class="confirm-title">오류 메세지</div>
+        <div class="confirm-line"></div>
+        <div class="confirm-message">{{ error }}</div>
+        <div class="confirm-answer-box">
+          <div class="confirm-answer-omT ok">확인</div>
+        </div>
+    </div>
+    <div class="confirm-overlay"></div>
+    {% endif %}
+
+{% endif %}
+</body>
+
+<script>
+    $(".ok").on("click", function () {
+        $(".moveconfirm").removeClass("active");
+        $(".moveconfirm").addClass("none");
+        $(".confirm-overlay").fadeOut();
+    });
+</script>
+
+{% endblock %}

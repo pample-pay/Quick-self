@@ -29,7 +29,6 @@ a:hover { color: blue; text-decoration: none;}
     max-width: 450px;
     padding: 15px;
     margin: auto;
-    margin-top:50px
 }
 
 .btnSubmit{
@@ -78,12 +77,15 @@ a:hover { color: blue; text-decoration: none;}
     box-shadow: 1px 1px 3px 1px #dadce0;
 }
 
-h4.card-title:after {
+div.card-check:after {
     content: "";
     display: block;
-    width: 70px;
+    width: 360px;
     border-bottom: 1px solid #bcbcbc;
-    margin: 15px 0px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top :15px;
+    margin-bottom: 15px;
 }
 
 .plus {
@@ -115,4 +117,87 @@ h4.card-title:after {
 .button-bag {
     text-align: center;
     margin-top: 30px;
+}
+
+.check-form {
+    width: 64px;
+    display: inline;
+}
+
+.check-ex {
+    font-size: 12px;
+    color:rgb(101, 101, 101)
+}
+
+.checkbtn-ps{
+    color: #ffffff;
+    background-color: rgb(86, 150, 163);
+    margin-left: 8px;
+}
+
+
+.moveconfirm {
+    position: fixed;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    border-radius: 16px;
+    width: 320px;
+    height: 140px;
+    color: #777777;
+    background-color: #ffffff;
+    font-size: 12px;
+    font-weight: 400;
+    transition: all 0.3s;
+    z-index: 999;
+}
+
+.active {
+    display: flex;
+  }
+
+.moveconfirm.active {
+    display: flex;
+}
+
+.confirm-title {
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.confirm-line {
+    border: 1px solid #777777;
+    width: 80%;
+    margin-bottom: 20px;
+}
+
+.confirm-answer-box {
+    display: flex;
+    width: 90%;
+}
+
+.confirm-answer-omT {
+    background-color: rgb(108,188,202);
+    color: rgb(255, 255, 255);
+    width: 50%;
+    margin-left: 70px;
+    margin-top: 20px;
+    border: 1px solid #ffffff;
+    border-radius: 32px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.confirm-overlay {
+    /* display: none; */
+    position: fixed;
+    z-index: 998;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.3);
 }

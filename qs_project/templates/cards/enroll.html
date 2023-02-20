@@ -49,7 +49,7 @@
         </div></nav>
     </header>
     
-    <main class="form-main" style="margin-top:50px">
+    <main class="form-main">
         <section class="py-3 text-center container">
             <div class="row py-lg-1"><div class="col-lg-10 col-md-8 mx-auto">
                 <h1 class="fw-light">
@@ -68,7 +68,7 @@
             <div class="container"><div class="row">
                 <div class="card card-pos">
                     <div class="card-header card-header-pos">
-                        <strong>
+                        <strong> 
                             {{ card.card_token.card_nickname }}
                         </strong>
                     </div>
@@ -96,7 +96,7 @@
                             영수증 발행 : {{ card.card_token.get_oiling_receipt_display }}
                         </p>
 
-                        <div style="text-align: center;">
+                        <div class="button-bag">
                             <button
                                 class="btn btn-danger"
                                 type="submit"
@@ -127,7 +127,7 @@
                 <button
                     class="plus radius"
                     type="button"
-                    onclick="location.href='/insert_enroll/'">
+                    onclick="location.href='./insert'">
                     
                 </button>
 

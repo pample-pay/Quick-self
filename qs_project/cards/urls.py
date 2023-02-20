@@ -13,5 +13,5 @@ urlpatterns = [
 
     path('api/v1/card-delete/<int:pk>', views.CardDelete.as_view(), name='card_delete'), 
 
-    path('insert_enroll/', views.insert_card_view, name='insert_card_info'),       
+    path('enroll/insert', views.insert_card_view, name='insert_card_info'),       
 ]
