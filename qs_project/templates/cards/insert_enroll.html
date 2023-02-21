@@ -53,113 +53,134 @@
     
     <main class="form-main">
         <div class="container"><div class="row">
-            <div class="card card-pos">
-                <div class="card-body">
-                    <h2 class="card-title" style="margin-top: 16px;">카드 조회</h2>
+            <div class="card card-pos"><div class="card-body">
+                
+                <h2 class="card-title">카드 조회</h2>
+                <p class="check-ex">기존에 Quickself를 이용하셨던 정보를 불러와서 사용할 수 있습니다.</p>
 
-                    <p class="check-ex">기존에 Quickself를 이용하셨던 정보를 불러와서 사용할 수 있습니다.</p>
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="card-check">
 
-                    <form method="POST">
-                        {% csrf_token %}
-                        <div class="card-check" style="padding-top: 0px;">
+                        <input
+                            class="form-control check-form"
+                            type="text" id="id_card_num1" name="card_num1"
+                            maxlength='4' size='4'
+                            value="{{ card_num1 }}"/>
 
-                            <input
-                                class="form-control check-form"
-                                type="text" id="id_card_num1" name="card_num1"
-                                maxlength='4' size='4'
-                                value="{{ card_num1 }}"
-                            />
-                            <input
-                                class="form-control check-form"
-                                type="text" id="id_card_num2" name="card_num2"
-                                maxlength='4' size='4'
-                                value="{{ card_num2 }}"
-                            />
-                            <input
-                                class="form-control check-form"
-                                type="text" id="id_card_num3" name="card_num3"
-                                maxlength='4' size='4'
-                                value="{{ card_num3 }}"
-                            />
-                            <input
-                                class="form-control check-form"
-                                type="text" id="id_card_num4" name="card_num4"
-                                maxlength='4' size='4'
-                                value="{{ card_num4 }}"
-                            />
+                        <input
+                            class="form-control check-form"
+                            type="text" id="id_card_num2" name="card_num2"
+                            maxlength='4' size='4'
+                            value="{{ card_num2 }}"/>
 
-                            <button class="btn checkbtn-ps" style="margin-bottom: 2px;" type="submit" formaction="/api/v1/card-check">
-                                조회
-                            </button>
+                        <input
+                            class="form-control check-form"
+                            type="text" id="id_card_num3" name="card_num3"
+                            maxlength='4' size='4'
+                            value="{{ card_num3 }}"/>
 
-                        </div>
+                        <input
+                            class="form-control check-form"
+                            type="text" id="id_card_num4" name="card_num4"
+                            maxlength='4' size='4'
+                            value="{{ card_num4 }}"/>
 
-                        <p>
-                            유종 : {{ oiling_type }} <br>
-                            금액 : {{ oiling_price }} <br>
-                            포인트카드 : {{ point_number }}<br>
-                            영수증 발행여부 : {{ oiling_receipt }}<br>
-                        </p>
-    
-                        <button class="btnSubmit" type="submit" margin="auto" formaction="/api/v1/card-check-enroll">
+                        <button
+                            class="btn checkbtn-ps"
+                            type="submit"
+                            formaction="/api/v1/card-check">
+                            조회
+                        </button>
+
+                    </div>
+
+                    <p>
+                        유종 : {{ oiling_type }} <br>
+                        금액 : {{ oiling_price }} <br>
+                        포인트카드 : {{ point_number }}<br>
+                        영수증 발행여부 : {{ oiling_receipt }}<br>
+                    </p>
+
+                    <div class="btn-wrap">
+
+                        <button
+                            class="btn btnSubmit"
+                            type="submit"
+                            formaction="/api/v1/card-check-enroll">
                             등록
                         </button>
-                    </form>
 
-                </div>                                
-            </div>
+                    </div>
+                </form>
+            </div></div>
             <p></p>
         </div></div>
 
         <div class="container"><div class="row">
-            <div class="card card-pos">
-                <div class="card-body">
-                    <h2>카드 등록</h2>
-                    <form method="POST" id="form2">
-                        {% csrf_token %}
-                        카드번호
-                        <select name="card_where" value="2">
-                            <option value="3">카카오뱅크</option>
-                            <option value="2">우리은행</option>
-                            <option value="1">신한은행</option>
-                            <option value="0">국민은행</option>
-                        </select>
-    
-                        <p></p>
-                        <input
-                            type="text" id="id_card_num1" name="card_num1"
-                            maxlength='4' size='4'
-                            value="{{form2_card_num1}}"
-                        />
+            <div class="card card-pos"><div class="card-body">
+                
+                <h2 class="card-title">카드 등록</h2>
+                
+                <form method="POST" id="form2">
+                    {% csrf_token %}
                         
-                        <input
-                            type="text" id="id_card_num2" name="card_num2"
-                            maxlength='4' size='4'
-                            value="{{form2_card_num2}}"
-                        />
-                        <input
-                            type="text" id="id_card_num3" name="card_num3"
-                            maxlength='4' size='4'
-                            value="{{form2_card_num3}}"
-                        />
-                        <input
-                            type="text" id="id_card_num4" name="card_num4"
-                            maxlength='4' size='4'
-                            value="{{form2_card_num4}}"
-                        />
-                        
+                    <p class="input-cardnum">
+                        은행 / 카드번호 입력
+                    </p>
     
-                        <br>
+                    <input
+                        class="form-control check-form"
+                        type="text" id="id_card_num1" name="card_num1"
+                        maxlength='4' size='4'
+                        value="{{form2_card_num1}}"/>
+                        
+                    <input
+                        class="form-control check-form"
+                        type="text" id="id_card_num2" name="card_num2"
+                        maxlength='4' size='4'
+                        value="{{form2_card_num2}}"/>
+
+                    <input
+                        class="form-control check-form"
+                        type="text" id="id_card_num3" name="card_num3"
+                        maxlength='4' size='4'
+                        value="{{form2_card_num3}}"/>
+
+                    <input
+                        class="form-control check-form"
+                        type="text" id="id_card_num4" name="card_num4"
+                        maxlength='4' size='4'
+                        value="{{form2_card_num4}}"/>
+
+                    <select class="input-cardwh" name="card_where">
+                        <option value="0">국민</option>
+                        <option value="1">삼성</option>
+                        <option value="2">신한</option>
+                        <option value="3">우리</option>
+                        <option value="4">하나</option>
+                        <option value="5">롯데</option>
+                        <option value="6">현대</option>
+                        <option value="7">NH농협</option>
+                        <option value="8">IBK</option>
+                        <option value="9">카카오</option>
+                        <option value="10">토스</option>
+                    </select>
+
+                    <p></p>
+
+                    <p class="input-cardtp">
                         유종
-                        <select name="oiling_type">
+                        <select name="oiling_type" id="oiling-type">
                             <option value="2">고급휘발유</option>
                             <option value="1">휘발유</option>
                             <option value="0">경유</option>
                         </select>
+                    </p>
                         
-                        <br>
+                    <p class="input-cardpc">
                         금액
-                        <select name="oiling_price">
+                        <select name="oiling_price" id="oiling-price">
                             <option value="10">가득</option>
                             <option value="9">10만원</option>
                             <option value="8">9만원</option>
@@ -172,46 +193,58 @@
                             <option value="1">2만원</option>
                             <option value="0">1만원</option>
                         </select>
-    
-                        <br>
-                        포인트카드번호
-                        <p></p>
-                        <input
-                            type="text" id="id_point_num1" name="point_num1"
-                            maxlength='4'size='4'
-                            value="{{form2_point_num1}}"
-                        />
-                        <input
-                            type="text" id="id_point_num2" name="point_num2"
-                            maxlength='4' size='4'
-                            value="{{form2_point_num2}}"
-                        />
-                        <input
-                            type="text" id="id_point_num3" name="point_num3"
-                            maxlength='4' size='4'
-                            value="{{form2_point_num3}}"
-                        />
-                        <input
-                            type="text" id="id_point_num4" name="point_num4"
-                            maxlength='4' size='4'
-                            value="{{form2_point_num4}}"
-                        />
-    
-                        <br>
+                    </p>
+
+                    <p class="input-pointnum">
+                        포인트카드 번호 등록
+                    </p>
+
+                    <input
+                        class="form-control check-form"
+                        type="text" id="id_point_num1" name="point_num1"
+                        maxlength='4'size='4'
+                        value="{{form2_point_num1}}"/>
+
+                    <input
+                        class="form-control check-form"
+                        type="text" id="id_point_num2" name="point_num2"
+                        maxlength='4' size='4'
+                        value="{{form2_point_num2}}"/>
+
+                    <input
+                        class="form-control check-form"
+                        type="text" id="id_point_num3" name="point_num3"
+                        maxlength='4' size='4'
+                        value="{{form2_point_num3}}"/>
+
+                    <input
+                        class="form-control check-form"
+                        type="text" id="id_point_num4" name="point_num4"
+                        maxlength='4' size='4'
+                        value="{{form2_point_num4}}"/>
+
+                    <p class="input-cardrp">
                         영수증발행여부
-                        <select name="oiling_receipt">
+
+                        <select name="oiling_receipt" id="oiling-receipt">
                             <option value="1">NO</option>
                             <option value="0">YES</option>
                         </select>
-                        <br>
-                
-                        <button class="btnSubmit" type="submit" formaction="/api/v1/card-enroll">
+
+                    </p>
+
+                    <div class="btn-wrap">
+
+                        <button
+                            class="btn btnSubmit"
+                            type="submit"
+                            formaction="/api/v1/card-enroll">
                             등록
                         </button>
-                    </form>
 
-                </div>                                
-            </div>
+                    </div>
+                </form>
+            </div></div>
             <p></p>
         </div></div>
     </main>
@@ -222,7 +255,7 @@
         <div class="confirm-line"></div>
         <div class="confirm-message">{{ error }}</div>
         <div class="confirm-answer-box">
-          <div class="confirm-answer-omT ok">확인</div>
+            <div class="confirm-answer-omT ok">확인</div>
         </div>
     </div>
     <div class="confirm-overlay"></div>
@@ -230,6 +263,27 @@
 
 {% endif %}
 </body>
+
+{% if form2_oiling_type %}
+<script>
+    const select_type = document.getElementById('oiling-type');
+    select_type.value = "{{ form2_oiling_type }}";
+</script>
+{% endif %}
+
+{% if form2_oiling_price %}
+<script>
+    const select_price = document.getElementById('oiling-price');
+    select_price.value = "{{ form2_oiling_price }}";
+</script>
+{% endif %}
+
+{% if form2_oiling_receipt %}
+<script>
+    const select_receipt = document.getElementById('oiling-receipt');
+    select_receipt.value = "{{ form2_oiling_receipt }}";
+</script>
+{% endif %}
 
 <script>
     $(".ok").on("click", function () {

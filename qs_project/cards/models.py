@@ -4,9 +4,10 @@ from django.conf import settings
 
 
 class Card_Info(models.Model):
-    card_token = models.CharField(max_length=50, verbose_name="카드토큰")
+    card_token = models.CharField(max_length=256, verbose_name="카드토큰")
 
-    card_nickname = models.CharField(max_length=10, verbose_name="카드닉네임")
+    card_uniq = models.CharField(max_length=10, verbose_name="카드구분", default='None')
+    card_nickname = models.CharField(max_length=10, verbose_name="카드닉네임", default='None')
 
     oiling_type = models.CharField(choices=TYPE_CHOICES, max_length=10, verbose_name="유종")
     oiling_price = models.CharField(choices=PRICE_CHOICES, max_length=10, verbose_name="금액")

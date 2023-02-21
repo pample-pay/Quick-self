@@ -10,7 +10,8 @@ urlpatterns = [
 
     path('api/v1/card-check', views.CardCheckView.as_view(), name='card_check'), 
     path('api/v1/card-check-enroll', views.CardCheckEnrollView.as_view(), name='card_check_enroll'), 
-
+    
+    path('api/v1/card-update/<int:pk>', views.CardEdit.as_view(), name='card_edit'), 
     path('api/v1/card-delete/<int:pk>', views.CardDelete.as_view(), name='card_delete'), 
 
     path('enroll/insert', views.insert_card_view, name='insert_card_info'),       

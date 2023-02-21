@@ -32,9 +32,9 @@ a:hover { color: blue; text-decoration: none;}
 }
 
 .btnSubmit{
-    width:100px;
-    margin-top: 20px;
-    display:inline;
+    width:25%;
+    color: #ffffff;
+    background-color: rgb(86, 150, 163);
 }
 
 .bd-placeholder-img {
@@ -80,7 +80,7 @@ a:hover { color: blue; text-decoration: none;}
 div.card-check:after {
     content: "";
     display: block;
-    width: 360px;
+    width: 100%;
     border-bottom: 1px solid #bcbcbc;
     margin-left: auto;
     margin-right: auto;
@@ -120,19 +120,25 @@ div.card-check:after {
 }
 
 .check-form {
-    width: 64px;
+    width: 17%;
+    font-size: 14px;
     display: inline;
 }
 
 .check-ex {
-    font-size: 12px;
+    font-size: 65%;
     color:rgb(101, 101, 101)
 }
 
 .checkbtn-ps{
+    margin-left: 2%;
+    margin-bottom: 1%;
+    width: 17%;
+    font-size: 14px;
+    font-weight: 600;
     color: #ffffff;
     background-color: rgb(86, 150, 163);
-    margin-left: 8px;
+
 }
 
 
@@ -200,4 +206,36 @@ div.card-check:after {
     width: 100vw;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.3);
+}
+
+.btn-wrap {
+    text-align: center;
+}
+
+.input-cardnum {
+    margin-top: 20px;
+    margin-bottom: 0px;
+}
+
+.input-cardwh {
+    height: 36px;
+}
+
+.input-cardtp {
+    display: inline;
+    margin-top: 12px;
+}
+
+.input-cardpc {
+    display: inline;
+    margin-left: 10%;
+}
+
+.input-pointnum {
+    margin-top: 12px;
+    margin-bottom: 0px;
+}
+
+.input-cardrp {
+    margin-top: 12px;
 }
