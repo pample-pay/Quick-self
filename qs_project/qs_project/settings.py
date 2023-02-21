@@ -36,7 +36,7 @@ with open(secret_json) as f:
 SECRET_KEY = modules.get_secret("SECRET_KEY", secrets_key)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 

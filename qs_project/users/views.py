@@ -55,7 +55,7 @@ class LoginView(FormView):
         return super().form_invalid(form)
 
 
-
+@method_decorator(logout_message_required, name='dispatch')
 class UserRegisterView(CreateView):
     '''
     회원가입 페이지 view

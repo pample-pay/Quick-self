@@ -1,0 +1,241 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto+Mono:400,700");
+
+@media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+    font-size: 3.5rem;
+    }
+}
+
+body {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background-color: #f5f5f5;
+}
+
+a:link { color: rgb(0, 0, 0); text-decoration: none;}
+a:visited { color: black; text-decoration: none;}
+a:hover { color: blue; text-decoration: none;}
+
+.navbar-color {
+    background-color: rgb(108,188,202);
+}
+
+.form-main {
+    align-items: center;
+    width: 100%;
+    max-width: 450px;
+    padding: 15px;
+    margin: auto;
+}
+
+.btnSubmit{
+    width:25%;
+    color: #ffffff;
+    background-color: rgb(86, 150, 163);
+}
+
+.bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+  
+.sign-out {
+    color: black;
+    outline: none;
+    text-decoration: none;
+    transition: all 0.1s;
+}
+
+.sign-out:focus,
+.sign-out:hover,
+.sign-out:active {
+    color: black;
+    background-color: grey;
+    text-decoration: none;
+}
+
+.sign-out > span {
+    margin: 0.1em;
+}
+
+.card-header-pos {
+    margin-top: 0.3%;
+    margin-left: -2.5%;
+    width: 105%;
+    background-color: rgba(108,188,202,0.80);
+    border-bottom: 1.5px solid rgb(108,188,202);
+    text-align: center;
+}
+
+.card-pos {
+    box-shadow: 1px 1px 3px 1px #dadce0;
+}
+
+div.card-check:after {
+    content: "";
+    display: block;
+    width: 100%;
+    border-bottom: 1px solid #bcbcbc;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top :15px;
+    margin-bottom: 15px;
+}
+
+.plus {
+    display:inline-block;
+    width:50px;
+    height:50px;
+  
+    background:
+      linear-gradient(#fff 0 0),
+      linear-gradient(#fff 0 0),
+      rgba(108,188,202,0.80);
+    background-position:center;
+    background-size: 50% 2px,2px 50%; /*thickness = 2px, length = 50% (25px)*/
+    background-repeat:no-repeat;
+}
+
+.radius {
+    border-radius:50%;
+    border: 0px;
+}
+
+.card2-pos {
+    margin-top: 10px;
+    text-align: center;
+    background-color: rgb(245,245,245);
+    box-shadow: 1px 1px 3px 1px #dadce0 inset;
+}
+
+.button-bag {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.check-form {
+    width: 17%;
+    font-size: 14px;
+    display: inline;
+}
+
+.check-ex {
+    font-size: 65%;
+    color:rgb(101, 101, 101)
+}
+
+.checkbtn-ps{
+    margin-left: 2%;
+    margin-bottom: 1%;
+    width: 17%;
+    font-size: 14px;
+    font-weight: 600;
+    color: #ffffff;
+    background-color: rgb(86, 150, 163);
+
+}
+
+
+.moveconfirm {
+    position: fixed;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    border-radius: 16px;
+    width: 320px;
+    height: 140px;
+    color: #777777;
+    background-color: #ffffff;
+    font-size: 12px;
+    font-weight: 400;
+    transition: all 0.3s;
+    z-index: 999;
+}
+
+.active {
+    display: flex;
+  }
+
+.moveconfirm.active {
+    display: flex;
+}
+
+.confirm-title {
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.confirm-line {
+    border: 1px solid #777777;
+    width: 80%;
+    margin-bottom: 20px;
+}
+
+.confirm-answer-box {
+    display: flex;
+    width: 90%;
+}
+
+.confirm-answer-omT {
+    background-color: rgb(108,188,202);
+    color: rgb(255, 255, 255);
+    width: 50%;
+    margin-left: 70px;
+    margin-top: 20px;
+    border: 1px solid #ffffff;
+    border-radius: 32px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.confirm-overlay {
+    /* display: none; */
+    position: fixed;
+    z-index: 998;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.btn-wrap {
+    text-align: center;
+}
+
+.input-cardnum {
+    margin-top: 20px;
+    margin-bottom: 0px;
+}
+
+.input-cardwh {
+    height: 36px;
+}
+
+.input-cardtp {
+    display: inline;
+    margin-top: 12px;
+}
+
+.input-cardpc {
+    display: inline;
+    margin-left: 10%;
+}
+
+.input-pointnum {
+    margin-top: 12px;
+    margin-bottom: 0px;
+}
+
+.input-cardrp {
+    margin-top: 12px;
+}

@@ -49,7 +49,7 @@
         </div></nav>
     </header>
     
-    <main class="form-main" style="margin-top:50px">
+    <main class="form-main">
         <section class="py-3 text-center container">
             <div class="row py-lg-1"><div class="col-lg-10 col-md-8 mx-auto">
                 <h1 class="fw-light">
@@ -60,30 +60,69 @@
                 </p>
             </div></div>
         </section>
-        
+        {% for card in card_sets %}
         <form method="POST">
-            {% for card in card_sets %}
             {% csrf_token %}
             
             <div class="container"><div class="row">
                 <div class="card card-pos">
                     <div class="card-header card-header-pos">
-                        <strong>
-                            {{ card.card_token.card_nickname }}
+                        <strong> 
+                            {{ card.card_token.card_uniq}}
                         </strong>
                     </div>
                     
                     <div class="card-body">
+
                         <h4 class="card-title">
                             {{ card.card_token.card_nickname }}
+
+                        </h4>
+
+                        <h4 class="card-title" style="display: none;" id="input1">
+                            <input
+                                class="form-control check-form check-form-edit"
+                                type="text" id="id_card_nickname" name="card_nickname"
+                                maxlength='8' size='8'
+                                value="{{ card.card_token.card_nickname }}"/>
                         </h4>
                         
                         <p class="card-text">
-                            유종 : {{ card.card_token.get_oiling_type_display }}
+                            유종 :{{ card.card_token.get_oiling_type_display }}
                         </p>
+
+                        <p class="card-text" style="display: none;">
+                            유종 :
+                            <select name="oiling_type" id="oiling-type">
+                                <option value="2">고급휘발유</option>
+                                <option value="1">휘발유</option>
+                                <option value="0">경유</option>
+                            </select>
+                            
+                        </p>
+
                         <p class="card-text">
                             주유금액 : {{ card.card_token.get_oiling_price_display }}
                         </p>
+
+                        <p class="card-text" style="display: none;">
+                            주유금액 : 
+                            <select name="oiling_price" id="oiling-price">
+                                <option value="10">가득</option>
+                                <option value="9">10만원</option>
+                                <option value="8">9만원</option>
+                                <option value="7">8만원</option>
+                                <option value="6">7만원</option>
+                                <option value="5">6만원</option>
+                                <option value="4">5만원</option>
+                                <option value="3">4만원</option>
+                                <option value="2">3만원</option>
+                                <option value="1">2만원</option>
+                                <option value="0">1만원</option>
+                            </select>
+                        </p>
+
+
                         <p class="card-text">
                             포인트카드 :
                             {% if card.card_token.point_number %}
@@ -92,11 +131,20 @@
                             미등록
                             {% endif %}
                         </p>
+
                         <p class="card-text">
                             영수증 발행 : {{ card.card_token.get_oiling_receipt_display }}
                         </p>
 
-                        <div style="text-align: center;">
+                        <p class="card-text" style="display: none;">
+                            영수증 발행 :
+                            <select name="oiling_receipt" id="oiling-receipt">
+                                <option value="1">NO</option>
+                                <option value="0">YES</option>
+                            </select>
+                        </p>
+
+                        <div class="button-bag">
                             <button
                                 class="btn btn-danger"
                                 type="submit"
@@ -104,7 +152,17 @@
                                 삭제
                             </button>
                             <button
-                                class="btn btn-success">
+                                class="btn btn-success"
+                                type="button"
+                                onclick="btnClick();">
+                                수정
+                            </button>
+                        </div>
+                        <div class="button-bag" style="display: none;">
+                            <button
+                                class="btn btn-success"
+                                type="submit"
+                                formaction="/api/v1/card-update/{{ card.id }}">
                                 수정
                             </button>
                         </div>
@@ -112,8 +170,9 @@
                 </div>
                 <p></p>
             </div></div>
-            {% endfor %}
         </form>
+
+        {% endfor %}
         
         <div class="container text-center"><div class="row">
             <div class="card card2-pos"><div class="card-body">
@@ -127,7 +186,7 @@
                 <button
                     class="plus radius"
                     type="button"
-                    onclick="location.href='/insert_enroll/'">
+                    onclick="location.href='/enroll/insert'">
                     
                 </button>
 
@@ -139,5 +198,6 @@
 {% endif %}
 </body>
 
+<script src="{% static 'js/cards/enroll.js' %}"></script>
 
 {% endblock %}

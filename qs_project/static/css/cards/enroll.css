@@ -29,6 +29,7 @@ a:hover { color: blue; text-decoration: none;}
     max-width: 450px;
     padding: 15px;
     margin: auto;
+    margin-top:50px
 }
 
 .btnSubmit{
@@ -109,4 +110,15 @@ h4.card-title:after {
     text-align: center;
     background-color: rgb(245,245,245);
     box-shadow: 1px 1px 3px 1px #dadce0 inset;
+}
+
+.button-bag {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.check-form-edit{
+    width: 55%;
+    font-weight: 500;
+    font-size: 1em;
 }
