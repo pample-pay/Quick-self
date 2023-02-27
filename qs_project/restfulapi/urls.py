@@ -1,7 +1,7 @@
 from django.urls import path, include
 from . import views
 
-app_name = 'restfulapip'
+app_name = 'restfulapi'
 
 urlpatterns = [
     path('api/v1/receive-cards', views.ReceiveCardsView.as_view(), name='receive_cards'), 
