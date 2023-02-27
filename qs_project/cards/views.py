@@ -8,6 +8,7 @@ from django.shortcuts import render, redirect
 from django.template.response import TemplateResponse
 
 from rest_framework import serializers, status
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -45,6 +46,8 @@ class CardInfoSerializer(serializers.ModelSerializer):
 
 
 class CardCheckView(APIView):
+
+    permission_classes = [IsAuthenticated]
 
     def post(self, request):
 
@@ -111,6 +114,8 @@ class CardCheckView(APIView):
 
 class CardCheckEnrollView(APIView):
 
+    permission_classes = [IsAuthenticated]
+
     def post(self, request):
 
         try:
@@ -166,6 +171,8 @@ class CardCheckEnrollView(APIView):
 
 
 class CardEnrollView(APIView):
+
+    permission_classes = [IsAuthenticated]
 
     def post(self, request):
 
@@ -239,6 +246,8 @@ class CardEnrollView(APIView):
 
 class CardDelete(APIView):
 
+    permission_classes = [IsAuthenticated]
+
     def post(self, request, pk):
         try:
             card_post = User_Card.objects.get(pk=pk)
@@ -249,8 +258,11 @@ class CardDelete(APIView):
         
         else:
             return redirect('/enroll')
+        
 
 class CardEdit(APIView):
+
+    permission_classes = [IsAuthenticated]
 
     def post(self, request, pk):
 
