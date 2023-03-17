@@ -1,5 +1,6 @@
 .DS_Store
 db.sqlite3
+quickself_env 
 __pycache__/
 
 # secret key
