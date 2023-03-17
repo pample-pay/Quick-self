@@ -1,6 +1,5 @@
 from django.contrib import admin
-from .models import Card_Info, User_Card
-from django.contrib.auth.models import Group
+from .models import Card_Info, User_Card, Card_Receipt
 
 class UserAdmin(admin.ModelAdmin):
     list_display = (
@@ -24,3 +23,18 @@ class UserCardAdmin(admin.ModelAdmin):
     search_fields = ('user_id',)
 
 admin.site.register(User_Card, UserCardAdmin)
+
+class UserCardReceiptAdmin(admin.ModelAdmin):
+    list_display = (
+        'card_token', 
+        'card_uniq',
+        'oiling_type',
+        'oiling_price',
+        'point_number',
+        'oiling_receipt',
+        'gs_code',
+        'created_on',
+        )
+    search_fields = ('user_id',)
+
+admin.site.register(Card_Receipt, UserCardReceiptAdmin)
