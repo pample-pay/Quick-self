@@ -18,3 +18,4 @@ application = get_wsgi_application()
 
 application = WhiteNoise(application, root='')
 application.add_files('/web/qs_project/.static', prefix='')
+# application.add_files('./static', prefix='')
