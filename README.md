@@ -1,4 +1,4 @@
-# quick-self
+# Quick-self
 👾 Frameworks : Django, Javascript <br>
 👉🏻 Link : [http://quickself.kr/](http://quickself.kr/)<br><br>
 
